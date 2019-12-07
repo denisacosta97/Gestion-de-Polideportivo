@@ -19,9 +19,6 @@ import com.bumptech.glide.request.transition.Transition;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private ProgressBar mProgress;
-    Animation mAnimation;
-    LinearLayout linearFondo;
     private Handler mHandler;
 
     @Override
@@ -48,18 +45,18 @@ public class SplashScreenActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
-        }, 4500);
+        }, 4000);
     }
 
     private void loadData() {
-        Glide.with(this).load(R.color.colorPrimary)
-                .into(linearFondo);
+        //Glide.with(this).load(R.color.colorPrimary)
+          //      .into(linearFondo);
 
     }
 
     private void loadViews() {
-        mProgress = findViewById(R.id.splash_screen_progress_bar);
-        linearFondo = findViewById(R.id.splashbackgr);
+       // mProgress = findViewById(R.id.splash_screen_progress_bar);
+        //linearFondo = findViewById(R.id.splashbackgr);
 
     }
 
