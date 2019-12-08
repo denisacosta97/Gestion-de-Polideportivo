@@ -18,11 +18,8 @@ public class BDGestor extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
-
         sqLiteDatabase.execSQL(PiletaRepo.createTable());
-
-
+        sqLiteDatabase.execSQL(ReservaRepo.createTable());
     }
 
     @Override

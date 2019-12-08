@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getApplicationContext(), GestionPiletaActivity.class));
                 break;
             case R.id.cardReservas:
+                startActivity(new Intent(getApplicationContext(), GestionReservaActivity.class));
                 break;
         }
 

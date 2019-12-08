@@ -28,6 +28,9 @@ public class Utils {
     public static final String AUTO_INCREMENT = "primary key autoincrement";
     public static final String  EMAIL_CONTACT = "mail_value";
     public static final String PASS_CONTACT = "pass_value";
+    public static final String IS_FIRST_TIME_LAUNCH = "is_first";
+    public static final String PREF_NAME = "bienestar_welcome";
+    public static final String DNI_TRABAJADOR = "dni";
 
 
     public static void showLog(String t, String msj) {
