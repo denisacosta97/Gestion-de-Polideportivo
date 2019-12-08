@@ -1,11 +1,15 @@
 package com.unse.gestiondepolideportivo.Modelo;
 
 import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class PiletaIngreso {
 
     public static final String TAG = PiletaIngreso.class.getSimpleName();
-    public static final String TABLE = "Evento";
+    public static final String TABLE = "pileta";
     // Labels Table Columns names
     public static final String KEY_ID = BaseColumns._ID;
     public static final String KEY_DNI = "dni";
@@ -15,6 +19,7 @@ public class PiletaIngreso {
     public static final String KEY_FECHA = "fecha";
     public static final String KEY_PRECIO1 = "precio1";
     public static final String KEY_PRECIO2 = "precio2";
+    public static final String KEY_EMPLEADO = "dniEmpleado";
 
     private int dni;
     private int id;
@@ -24,6 +29,7 @@ public class PiletaIngreso {
     private String fecha;
     private float precio1;
     private float precio2;
+    private int dniEmpleado;
 
     public PiletaIngreso() {
         this.dni = 0;
@@ -36,7 +42,8 @@ public class PiletaIngreso {
         this.precio2 = 0f;
     }
 
-    public PiletaIngreso(int dni, int id, int categoria, int cantMayores, int cantMenores, String fecha, float precio1, float precio2) {
+    public PiletaIngreso(int dni, int id, int categoria, int cantMayores, int cantMenores, String fecha,
+                         float precio1, float precio2, int dniEm) {
         this.dni = dni;
         this.id = id;
         this.categoria = categoria;
@@ -45,6 +52,15 @@ public class PiletaIngreso {
         this.fecha = fecha;
         this.precio1 = precio1;
         this.precio2 = precio2;
+        this.dniEmpleado = dniEm;
+    }
+
+    public int getDniEmpleado() {
+        return dniEmpleado;
+    }
+
+    public void setDniEmpleado(int dniEmpleado) {
+        this.dniEmpleado = dniEmpleado;
     }
 
     public int getDni() {
@@ -109,5 +125,12 @@ public class PiletaIngreso {
 
     public void setPrecio2(float precio2) {
         this.precio2 = precio2;
+    }
+
+    @Override
+    public String toString() {
+        Gson gson = new GsonBuilder().create();
+        String json = gson.toJson(this);
+        return json;
     }
 }

@@ -26,6 +26,8 @@ public class Utils {
     public static final String FLOAT_TYPE = "float";
     public static final String NULL_TYPE = "not null";
     public static final String AUTO_INCREMENT = "primary key autoincrement";
+    public static final String  EMAIL_CONTACT = "mail_value";
+    public static final String PASS_CONTACT = "pass_value";
 
 
     public static void showLog(String t, String msj) {
@@ -54,6 +56,19 @@ public class Utils {
 
     }
 
+    public static String getFechaOnlyDay(Date date) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        String value = cal.get(Calendar.DAY_OF_MONTH) + "/"
+                + (cal.get(Calendar.MONTH) + 1) + "/" +
+                cal.get(Calendar.YEAR);
+
+        return value;
+
+
+    }
+
     public static Date getFechaDate(String fecha) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date fechaI = null;
@@ -61,9 +76,14 @@ public class Utils {
             fechaI = simpleDateFormat.parse(fecha);
 
         } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                fechaI = simpleDateFormat.parse(fecha);
 
+            } catch (ParseException e2) {
+                e2.printStackTrace();
+            }
+        }
         return fechaI;
 
     }
@@ -151,24 +171,24 @@ public class Utils {
             case Calendar.FRIDAY:
                 return "Viernes";
             case Calendar.SATURDAY:
-                return "Sabado";
+                return "Sábado";
             case Calendar.SUNDAY:
                 return "Domingo";
         }
         return "";
     }
 
-    public static boolean validarDNI(String dni){
+    public static boolean validarDNI(String dni) {
         boolean isNumber = true;
         try {
             Integer.parseInt(dni);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             isNumber = false;
         }
         return isNumber && dni.length() >= 7 && validarNumero(dni);
     }
 
-    public static boolean validarNumero(String numero){
+    public static boolean validarNumero(String numero) {
         String regex = "[0-9]+";
         return numero.matches(regex);
     }

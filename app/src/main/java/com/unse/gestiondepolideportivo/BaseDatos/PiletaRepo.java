@@ -29,7 +29,7 @@ public class PiletaRepo {
     }
 
     static String createTable() {
-        return String.format("create table %s(%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s)",
+        return String.format("create table %s(%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s, %s %s %s)",
                 PiletaIngreso.TABLE,
                 PiletaIngreso.KEY_ID, Utils.INT_TYPE, Utils.AUTO_INCREMENT,
                 PiletaIngreso.KEY_DNI, Utils.INT_TYPE, Utils.NULL_TYPE,
@@ -38,7 +38,8 @@ public class PiletaRepo {
                 PiletaIngreso.KEY_CANTMEN, Utils.INT_TYPE, Utils.NULL_TYPE,
                 PiletaIngreso.KEY_FECHA, Utils.STRING_TYPE, Utils.NULL_TYPE,
                 PiletaIngreso.KEY_PRECIO1, Utils.FLOAT_TYPE, Utils.NULL_TYPE,
-                PiletaIngreso.KEY_PRECIO2, Utils.FLOAT_TYPE, Utils.NULL_TYPE);
+                PiletaIngreso.KEY_PRECIO2, Utils.FLOAT_TYPE, Utils.NULL_TYPE,
+                PiletaIngreso.KEY_EMPLEADO, Utils.INT_TYPE, Utils.NULL_TYPE);
     }
 
     private ContentValues loadValues(PiletaIngreso pileta, int tipo) {
@@ -52,6 +53,7 @@ public class PiletaRepo {
         values.put(PiletaIngreso.KEY_FECHA, pileta.getFecha());
         values.put(PiletaIngreso.KEY_PRECIO1, pileta.getPrecio1());
         values.put(PiletaIngreso.KEY_PRECIO2, pileta.getPrecio2());
+        values.put(PiletaIngreso.KEY_EMPLEADO, pileta.getDniEmpleado());
 
         return values;
     }
@@ -66,6 +68,7 @@ public class PiletaRepo {
         mPiletaIngreso.setFecha(cursor.getString(5));
         mPiletaIngreso.setPrecio1(cursor.getInt(6));
         mPiletaIngreso.setPrecio2(cursor.getInt(7));
+        mPiletaIngreso.setDniEmpleado(cursor.getInt(8));
 
         return mPiletaIngreso;
     }
@@ -144,4 +147,41 @@ public class PiletaRepo {
 
     }
 
+    public ArrayList<String> getAllFechas() {
+        SQLiteDatabase db = DBManager.getInstance().openDatabase();
+        ArrayList<String> list = new ArrayList<String>();
+        String query = String.format("select * from %s", PiletaIngreso.TABLE);
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                mPiletaIngreso = loadFromCursor(cursor);
+                String fecha = Utils.getFechaOnlyDay(Utils.getFechaDate(mPiletaIngreso.getFecha()));
+                if (!list.contains(fecha))
+                    list.add(fecha);
+            } while (cursor.moveToNext());
+        }
+        DBManager.getInstance().closeDatabase();
+        cursor.close();
+
+        return list;
+    }
+
+    public ArrayList<PiletaIngreso> getAllByFecha(String fecha) {
+        SQLiteDatabase db = DBManager.getInstance().openDatabase();
+        ArrayList<PiletaIngreso> list = new ArrayList<PiletaIngreso>();
+        String query = String.format("select * from %s", PiletaIngreso.TABLE);
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                mPiletaIngreso = loadFromCursor(cursor);
+                String f = Utils.getFechaOnlyDay(Utils.getFechaDate(mPiletaIngreso.getFecha()));
+                if (fecha.equals(f))
+                    list.add(mPiletaIngreso);
+            } while (cursor.moveToNext());
+        }
+        DBManager.getInstance().closeDatabase();
+        cursor.close();
+
+        return list;
+    }
 }

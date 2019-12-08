@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".SplashScreenActivity" />
         <activity android:name=".GestionPiletaActivity" />
+        <activity android:name=".ListadoIngresoActivity" />
+        <activity android:name=".EnviarDatosActivity" />
     </application>
 
 </manifest>

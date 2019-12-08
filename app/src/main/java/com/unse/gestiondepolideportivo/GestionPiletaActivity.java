@@ -1,5 +1,6 @@
 package com.unse.gestiondepolideportivo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,8 +41,8 @@ public class GestionPiletaActivity extends AppCompatActivity implements View.OnC
     private void loadData() {
         mOpciones = new ArrayList<>();
         mOpciones.add(new Opciones(1, "Nuevo Ingreso", R.drawable.ic_nuevo,R.color.colorGreen));
-        mOpciones.add(new Opciones(1, "Listado de Ingresos", R.drawable.ic_listado,R.color.colorGreen));
-        mOpciones.add(new Opciones(1, "Enviar Datos", R.drawable.ic_subida,R.color.colorGreen));
+        mOpciones.add(new Opciones(2, "Listado de Ingresos", R.drawable.ic_listado,R.color.colorGreen));
+        mOpciones.add(new Opciones(3, "Enviar Datos", R.drawable.ic_subida,R.color.colorGreen));
 
         mAdapter = new OpcionesAdapter(mOpciones, getApplicationContext());
         mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
@@ -53,7 +54,7 @@ public class GestionPiletaActivity extends AppCompatActivity implements View.OnC
     }
 
     private void loadListener() {
-        ItemClickSupport itemClickSupport = ItemClickSupport.from(mRecyclerView);
+        ItemClickSupport itemClickSupport = ItemClickSupport.addTo(mRecyclerView);
         itemClickSupport.setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position, long id) {
@@ -63,8 +64,10 @@ public class GestionPiletaActivity extends AppCompatActivity implements View.OnC
                         dialogo.show(getSupportFragmentManager(), "dialogo_entrada");
                         break;
                     case 2:
+                        startActivity(new Intent(getApplicationContext(), ListadoIngresoActivity.class));
                         break;
                     case 3:
+                        startActivity(new Intent(getApplicationContext(), EnviarDatosActivity.class));
                         break;
                 }
 

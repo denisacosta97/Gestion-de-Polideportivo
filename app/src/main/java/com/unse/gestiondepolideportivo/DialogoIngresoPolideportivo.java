@@ -64,6 +64,7 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
     private void updateCounter(int may, int men) {
         txtCantidadMay.setText(String.valueOf(may));
         txtCantidadMen.setText(String.valueOf(men));
+
     }
 
     private void loadListener() {
@@ -72,15 +73,14 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
             public void onClick(View v) {
                 String dni = edtDNI.getText().toString().trim();
                 if(!dni.equals("") && Utils.validarDNI(dni)){
-                    String cantMay = txtCantidadMay.getText().toString();
-                    String cantMen = txtCantidadMen.getText().toString();
                     String categoria = categorias[categoriaSelect];
                     String fecha = Utils.getFecha();
-                    if (Integer.parseInt(cantMay) >= 1 || Integer.parseInt(cantMen) >= 1){
+                    if (contadorMay >= 1 || contadorMeno >= 1){
                         PiletaRepo piletaRepo = new PiletaRepo(getContext());
                         PiletaIngreso piletaIngreso = new PiletaIngreso(Integer.parseInt(dni),-1, categoriaSelect+1,
-                                Integer.parseInt(cantMay), Integer.parseInt(cantMen),fecha, 20f, 20f);
+                                contadorMay, contadorMeno,fecha, 20f, 20f, 40657677);
                         piletaRepo.insert(piletaIngreso);
+                        dismiss();
                     }else{
                         Utils.showToast(getContext(), "¡Al menos debe haber un ingreso!");
                     }
@@ -124,14 +124,30 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnAddMay:
-
+                contadorMay++;
+                updateCounter(contadorMay, contadorMeno);
                 break;
             case R.id.btnRemoveMay:
+                if (contadorMay <= 0){
+                    contadorMay = 0;
+                }else{
+                    contadorMay--;
+                }
+                updateCounter(contadorMay, contadorMeno);
                 break;
             case R.id.btnAddMen:
+                contadorMeno++;
+                updateCounter(contadorMay, contadorMeno);
                 break;
             case R.id.btnRemoveMen:
+                if (contadorMeno <= 0){
+                    contadorMeno = 0;
+                }else{
+                    contadorMeno--;
+                }
+                updateCounter(contadorMay, contadorMeno);
                 break;
         }
+
     }
 }
