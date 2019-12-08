@@ -1,5 +1,6 @@
 package com.unse.gestiondepolideportivo;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,15 +10,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
 import com.unse.gestiondepolideportivo.BaseDatos.PiletaRepo;
 import com.unse.gestiondepolideportivo.Modelo.PiletaIngreso;
 
 import java.util.ArrayList;
 
-import static java.security.AccessController.getContext;
-
-public class EnviarDatosActivity extends AppCompatActivity implements View.OnClickListener {
+public class EnviarDatosPiletaActivity extends AppCompatActivity implements View.OnClickListener {
 
     Toolbar mToolbar;
     Spinner mSpinner;
@@ -32,6 +33,7 @@ public class EnviarDatosActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enviar_datos);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setToolbar();
 
@@ -63,7 +65,6 @@ public class EnviarDatosActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 loadInfo(position);
-
             }
 
             @Override
@@ -107,34 +108,53 @@ public class EnviarDatosActivity extends AppCompatActivity implements View.OnCli
                 onBackPressed();
                 break;
             case R.id.btnEnviar:
-                enviar();
+                enviarMensaje(v);
                 break;
         }
     }
 
-    private void enviar() {
-        if(cantidad > 0){
-            sendMail();
-        }else{
-            Utils.showToast(getApplicationContext(),"No hay datos registrados en este día");
-        }
-    }
-
-    private void sendMail() {
-       // String email = new PreferenciasManager(getContext()).getValueString(UtilsCristian.EMAIL_CONTACT);
+    private void enviarMensaje(View v) {
         String subject = "ENVIO DATOS "+Utils.getFecha();
         StringBuilder mensaje = new StringBuilder();
         for (PiletaIngreso piletaIngreso : new PiletaRepo(getApplicationContext()).getAllByFecha(fecha)){
             mensaje.append(piletaIngreso.toString());
             mensaje.append(",");
         }
+        sendEmails(mensaje, subject);
+    }
 
+    private void sendEmails(StringBuilder mensaje, String subject) {
+        String email = Utils.EMAIL_CONTACT1;
+        try {
 
-        //Creating SendMail object
-        SendMail sm = new SendMail(getApplicationContext(), "appmicrosde@gmail.com", subject, "jejeje");
+            BackgroundMail bm = new BackgroundMail(this);
+            bm.setGmailUserName(email);
+            bm.setGmailPassword(Utils.PASS_CONTACT1);
+            bm.setMailTo(email);
+            bm.setFormSubject(subject);
+            bm.setFormBody(mensaje.toString());
+            bm.setType(BackgroundMail.TYPE_PLAIN);
+            bm.setSendingMessageError("Error, intenta de nuevo");
+            bm.setSendingMessageSuccess("¡Mensaje enviado!");
+            bm.setOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
+                @Override
+                public void onSuccess() {
+                    finish();
+                }
+            });
+            bm.setOnFailCallback(new BackgroundMail.OnFailCallback() {
+                @Override
+                public void onFail() {
+                    Toast.makeText(EnviarDatosPiletaActivity.this, "Por favor, envíalo nuevamente.", Toast.LENGTH_SHORT).show();
+                }
+            });
+            bm.setSendingMessage("Enviando mensaje...");
+            bm.send();
 
-        //Executing sendmail to send email
-        sm.execute();
+        }catch (Exception e){
+            Toast.makeText(EnviarDatosPiletaActivity.this, "ERROR, envíalo nuevamente.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

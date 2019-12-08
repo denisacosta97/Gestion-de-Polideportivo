@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="20dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="15dp">
 
@@ -52,41 +53,46 @@
                     android:layout_height="wrap_content"
                     android:text="DNI"
                     android:textColor="@color/colorAccent"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:inputType="number"
                     android:id="@+id/edtDNI"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="DNI" />
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/edit_text_logreg"
+                    android:inputType="number"
+                    android:padding="10dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Tipo de Usuario"
                     android:textColor="@color/colorAccent"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/spineer"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Cantidad"
                     android:textColor="@color/colorAccent"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -198,25 +204,34 @@
                     android:layout_height="wrap_content"
                     android:text="Total"
                     android:textColor="@color/colorAccent"
-                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtTotal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorMoney"
                     android:textStyle="bold"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:gravity="center"
                     android:text="$ 120" />
 
                 <Button
-                    android:layout_gravity="center"
                     android:id="@+id/btnAceptar"
-                    style="@style/Base.Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:text="ACEPTAR" />
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:text="GUARDAR"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:background="@drawable/corners_rounded_green"
+                    android:layout_margin="5dp"/>
 
 
             </LinearLayout>
@@ -228,8 +243,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
-
 
 </android.support.v7.widget.CardView>

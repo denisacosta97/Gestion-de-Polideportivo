@@ -1,5 +1,7 @@
 package com.unse.gestiondepolideportivo;
 
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -25,6 +27,7 @@ public class GestionReservaActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_reserva);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setToolbar();
 
@@ -38,9 +41,9 @@ public class GestionReservaActivity extends AppCompatActivity implements View.On
 
     private void loadData() {
         mOpciones = new ArrayList<>();
-        mOpciones.add(new Opciones(1, "Nueva reserva", R.drawable.ic_nuevo,R.color.colorGreen));
-        mOpciones.add(new Opciones(2, "Listado de reservas", R.drawable.ic_listado,R.color.colorGreen));
-        mOpciones.add(new Opciones(3, "Enviar datos", R.drawable.ic_subida,R.color.colorGreen));
+        mOpciones.add(new Opciones(1, "Nueva reserva", R.drawable.ic_nuevo,R.color.bienestarNaranja));
+        mOpciones.add(new Opciones(2, "Listado de reservas", R.drawable.ic_listado,R.color.bienestarNaranja));
+        mOpciones.add(new Opciones(3, "Enviar datos", R.drawable.ic_subida,R.color.bienestarNaranja));
 
         mAdapter = new OpcionesAdapter(mOpciones, getApplicationContext());
         mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
@@ -63,6 +66,7 @@ public class GestionReservaActivity extends AppCompatActivity implements View.On
                         dialogo.show(getSupportFragmentManager(), "dialogo_reserva");
                         break;
                     case 2:
+                        startActivity(new Intent(getApplicationContext(), ListadoReservaActivity.class));
                         break;
                     case 3:
                         break;

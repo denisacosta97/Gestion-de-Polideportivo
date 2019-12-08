@@ -8,19 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.unse.gestiondepolideportivo.Modelo.ItemDato;
+import com.unse.gestiondepolideportivo.Modelo.ItemDatoReserva;
 import com.unse.gestiondepolideportivo.Modelo.ItemFecha;
-import com.unse.gestiondepolideportivo.Modelo.ItemListado;
+import com.unse.gestiondepolideportivo.Modelo.ItemReserva;
 
 import java.util.Date;
 import java.util.List;
 
-public class ListadoIngresosAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ListadoReservasAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private List<ItemListado> lista;
+    private List<ItemReserva> lista;
 
-    public ListadoIngresosAdapter(Context context, List<ItemListado> lista) {
+    public ListadoReservasAdapter(Context context, List<ItemReserva> lista) {
         this.lista = lista;
         this.mContext = context;
 
@@ -33,11 +33,11 @@ public class ListadoIngresosAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
         switch (viewType) {
-            case ItemListado.TIPO_DATO:
-                View view = inflater.inflate(R.layout.item_dato, viewGroup, false);
+            case ItemReserva.TIPO_DATO:
+                View view = inflater.inflate(R.layout.item_dato_reserva, viewGroup, false);
                 viewHolder = new DateViewHolder(view);
                 break;
-            case ItemListado.TIPO_FECHA:
+            case ItemReserva.TIPO_FECHA:
                 View view2 = inflater.inflate(R.layout.item_fecha, viewGroup, false);
                 viewHolder = new FechaViewHolder(view2);
                 break;
@@ -51,21 +51,22 @@ public class ListadoIngresosAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         switch (viewHolder.getItemViewType()) {
 
-            case ItemListado.TIPO_FECHA:
-                ItemFecha itemFecha = (ItemFecha) lista.get(position);
-                FechaViewHolder fechaViewHolder= (FechaViewHolder) viewHolder;
+            case ItemReserva.TIPO_FECHA:
+                ItemFechaReserva itemFecha = (ItemFechaReserva) lista.get(position);
+                FechaViewHolder fechaViewHolder = (FechaViewHolder) viewHolder;
                 Date date = Utils.getFechaDate(itemFecha.getFecha());
                 fechaViewHolder.txtFecha.setText(String.format("%s, %s de %s", Utils.getDayWeek(date), Utils.getDay(date),
                         Utils.getMes(date)));
                 break;
 
-            case ItemListado.TIPO_DATO:
-                ItemDato dateItem = (ItemDato) lista.get(position);
+            case ItemReserva.TIPO_DATO:
+                ItemDatoReserva dateItem = (ItemDatoReserva) lista.get(position);
                 DateViewHolder dateViewHolder = (DateViewHolder) viewHolder;
-                dateViewHolder.txtDNI.setText(String.valueOf(dateItem.getPiletaIngreso().getDni()));
-                dateViewHolder.txtCantMenor.setText(String.valueOf(dateItem.getPiletaIngreso().getCantMenores()));
-                dateViewHolder.txtCantidadMay.setText(String.valueOf(dateItem.getPiletaIngreso().getCantMayores()));
-                dateViewHolder.txtCategoria.setText(getCategoria(dateItem.getPiletaIngreso().getCategoria()-1));
+                dateViewHolder.txtDNI.setText(String.valueOf(dateItem.getReserva().getDni()));
+                dateViewHolder.txtCantMenor.setText(String.valueOf(dateItem.getReserva().getCantMenores()));
+                dateViewHolder.txtCantidadMay.setText(String.valueOf(dateItem.getReserva().getCantMayores()));
+                dateViewHolder.txtCategoria.setText(getCategoria(dateItem.getTipo()-1));
+                dateViewHolder.txtInstalaciones.setText(getInstalaciones(dateItem.getTipo()-1));
                 break;
         }
 
@@ -74,20 +75,25 @@ public class ListadoIngresosAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public String getCategoria(int i){
         String[] categorias = {"Estudiante","Docente","No Docente","Afiliado","Particular"};
-       return categorias[i];
+        return categorias[i];
     }
 
+    public String getInstalaciones(int i){
+        String[] instalaciones = {"Quincho Gris","Quincho Marrón","SUM"};
+        return instalaciones[i];
+    }
 
     //ViewHolder for date row item
     class DateViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtDNI, txtCantidadMay, txtCantMenor, txtTotal, txtCategoria;
+        private TextView txtDNI, txtCantidadMay, txtCantMenor, txtInstalaciones, txtCategoria;
 
-         DateViewHolder(View v) {
+        DateViewHolder(View v) {
             super(v);
             txtDNI = v.findViewById(R.id.txtDNI);
             txtCantidadMay = v.findViewById(R.id.txtMayor);
             txtCantMenor = v.findViewById(R.id.txtMenor);
             txtCategoria = v.findViewById(R.id.txtCategoria);
+            txtInstalaciones = v.findViewById(R.id.txtInstalaciones);
         }
     }
 

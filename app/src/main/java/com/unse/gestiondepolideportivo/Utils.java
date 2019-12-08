@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import com.unse.gestiondepolideportivo.BaseDatos.BDGestor;
@@ -15,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 
 public class Utils {
@@ -31,6 +33,8 @@ public class Utils {
     public static final String IS_FIRST_TIME_LAUNCH = "is_first";
     public static final String PREF_NAME = "bienestar_welcome";
     public static final String DNI_TRABAJADOR = "dni";
+    public static final String EMAIL_CONTACT1 = "appmicrosde@gmail.com";
+    public static final String PASS_CONTACT1 = "unse@2018";
 
 
     public static void showLog(String t, String msj) {
@@ -179,6 +183,11 @@ public class Utils {
                 return "Domingo";
         }
         return "";
+    }
+
+    public static boolean validarEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 
     public static boolean validarDNI(String dni) {

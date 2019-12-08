@@ -1,6 +1,7 @@
 package com.unse.gestiondepolideportivo;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
 
         view = inflater.inflate(R.layout.dialog_ingreso_poli, container, false);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getDialog().setCanceledOnTouchOutside(false);
         //Esto es lo nuevoooooooo, evita los bordes cuadrados
         if (getDialog().getWindow() != null)
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

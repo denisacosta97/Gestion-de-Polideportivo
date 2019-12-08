@@ -1,24 +1,28 @@
 package com.unse.gestiondepolideportivo;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Toolbar mToolbar;
     CardView mCardViewPileta, mCardViewReservas;
-
+    Button mBtnSalir;
+    private PreferenciasManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setToolbar();
 
@@ -33,18 +37,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void loadListener() {
         mCardViewReservas.setOnClickListener(this);
         mCardViewPileta.setOnClickListener(this);
+        mBtnSalir.setOnClickListener(this);
     }
 
     private void loadViews() {
         mCardViewPileta = findViewById(R.id.cardPileta);
         mCardViewReservas = findViewById(R.id.cardReservas);
+        mBtnSalir = findViewById(R.id.btnSalir);
     }
 
     private void setToolbar() {
         mToolbar = findViewById(R.id.toolbar);
         ((TextView)findViewById(R.id.txtTitulo)).setText("Gestión de Polideportivo");
         setSupportActionBar(mToolbar);
-        findViewById(R.id.imgFlecha).setVisibility(View.GONE);
+        //findViewById(R.id.imgFlecha).setVisibility(View.GONE);
     }
 
     @Override
@@ -55,6 +61,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.cardReservas:
                 startActivity(new Intent(getApplicationContext(), GestionReservaActivity.class));
+                break;
+            case R.id.btnSalir:
+                prefManager = new PreferenciasManager(this);
+                prefManager.setFirstTimeLaunch(true);
+                finish();
                 break;
         }
 

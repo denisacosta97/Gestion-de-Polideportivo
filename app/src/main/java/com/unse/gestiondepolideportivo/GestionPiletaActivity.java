@@ -1,6 +1,7 @@
 package com.unse.gestiondepolideportivo;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,6 +28,7 @@ public class GestionPiletaActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_pileta);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setToolbar();
 
@@ -40,9 +42,9 @@ public class GestionPiletaActivity extends AppCompatActivity implements View.OnC
 
     private void loadData() {
         mOpciones = new ArrayList<>();
-        mOpciones.add(new Opciones(1, "Nuevo Ingreso", R.drawable.ic_nuevo,R.color.colorGreen));
-        mOpciones.add(new Opciones(2, "Listado de Ingresos", R.drawable.ic_listado,R.color.colorGreen));
-        mOpciones.add(new Opciones(3, "Enviar Datos", R.drawable.ic_subida,R.color.colorGreen));
+        mOpciones.add(new Opciones(1, "Nuevo Ingreso", R.drawable.ic_nuevo,R.color.bienestarVerde));
+        mOpciones.add(new Opciones(2, "Listado de Ingresos", R.drawable.ic_listado,R.color.bienestarVerde));
+        mOpciones.add(new Opciones(3, "Enviar Datos", R.drawable.ic_subida,R.color.bienestarVerde));
 
         mAdapter = new OpcionesAdapter(mOpciones, getApplicationContext());
         mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
@@ -67,7 +69,7 @@ public class GestionPiletaActivity extends AppCompatActivity implements View.OnC
                         startActivity(new Intent(getApplicationContext(), ListadoIngresoActivity.class));
                         break;
                     case 3:
-                        startActivity(new Intent(getApplicationContext(), EnviarDatosActivity.class));
+                        startActivity(new Intent(getApplicationContext(), EnviarDatosPiletaActivity.class));
                         break;
                 }
 

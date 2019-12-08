@@ -39,6 +39,7 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
     String[] instalaciones = {"Quincho Gris","Quincho Marrón","SUM"};
 
     int contadorMay = 0, contadorMeno = 0, categoriaSelect = 0, instalacionesSelect = 0;
+    String categoria, instalacion;
 
     public void setContext(Context ctx){
         this.mContext = ctx;
@@ -49,6 +50,7 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
 
         view = inflater.inflate(R.layout.dialog_new_reserva, container, false);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getDialog().setCanceledOnTouchOutside(false);
         //Esto es lo nuevoooooooo, evita los bordes cuadrados
         if (getDialog().getWindow() != null)
             getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -92,10 +94,11 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
                     String horaIni = edtHsIni.toString();
                     String horaFin = edtHsFin.toString();
                     String fecha = Utils.getFecha();
+                    float precio = txtTotal.getInputType(); //revisar
                     if (Integer.parseInt(cantMay) >= 1 || Integer.parseInt(cantMen) >= 1){
                         ReservaRepo reservaRepo = new ReservaRepo(getContext());
                         Reserva reserva = new Reserva(Integer.parseInt(dni),-1, categoriaSelect+1,instalacionesSelect+1,
-                               Integer.parseInt(cantMay), Integer.parseInt(cantMen), horaIni, horaFin, fecha, 20f);
+                               Integer.parseInt(cantMay), Integer.parseInt(cantMen), horaIni, horaFin, fecha, precio);
                         reservaRepo.insert(reserva);
                     }else{
                         Utils.showToast(getContext(), "¡Al menos debe haber un ingreso!");
@@ -110,6 +113,7 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoriaSelect = position;
+                txtTotal.setText("");
             }
 
             @Override
@@ -122,6 +126,9 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 instalacionesSelect = position;
+                float precioTotal = calcularPrecio(categoriaSelect+1, instalacionesSelect+1);
+                String precio = Float.toString(precioTotal);
+                txtTotal.setText("$" + precio);
             }
 
             @Override
@@ -138,6 +145,43 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
         edtHsFin.setOnClickListener(this);
     }
 
+    private float calcularPrecio(int categ, int inst) {
+        float precio = 0;
+
+        switch (categ){
+            case 1:
+                //Estudiantes
+                if(inst == 1 || inst == 2)
+                    precio = 1200;
+                else
+                    precio = 3000;
+                break;
+            case 4:
+                //Afiliados
+                if(inst == 1 || inst == 2)
+                    precio = 1100;
+                else
+                    precio = 2750;
+                break;
+            case 5:
+                //Particular
+                if(inst == 1 || inst == 2)
+                    precio = 2200;
+                else
+                    precio = 5500;
+                break;
+            default:
+                //Docentes, Nodocentes y Egresados
+                if(inst == 1 || inst == 2)
+                    precio = 1850;
+                else
+                    precio = 4000;
+                break;
+        }
+        return precio;
+    }
+
+
     private void loadViews() {
         btnAceptar = view.findViewById(R.id.btnAceptar);
         edtDNI = view.findViewById(R.id.edtDNI);
@@ -152,7 +196,6 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
         mSpinnerInstalaciones = view.findViewById(R.id.spineer2);
         edtHsIni = view.findViewById(R.id.edtHraIni);
         edtHsFin = view.findViewById(R.id.edtHraFin);
-
     }
 
     private void showTimeDialog(final int edt){
@@ -188,12 +231,28 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnAddMay:
+                contadorMay++;
+                updateCounter(contadorMay, contadorMeno);
                 break;
             case R.id.btnRemoveMay:
+                if (contadorMay <= 0){
+                    contadorMay = 0;
+                }else{
+                    contadorMay--;
+                }
+                updateCounter(contadorMay, contadorMeno);
                 break;
             case R.id.btnAddMen:
+                contadorMeno++;
+                updateCounter(contadorMay, contadorMeno);
                 break;
             case R.id.btnRemoveMen:
+                if (contadorMeno <= 0){
+                    contadorMeno = 0;
+                }else{
+                    contadorMeno--;
+                }
+                updateCounter(contadorMay, contadorMeno);
                 break;
             case R.id.edtHraIni:
                 showTimeDialog(0);
