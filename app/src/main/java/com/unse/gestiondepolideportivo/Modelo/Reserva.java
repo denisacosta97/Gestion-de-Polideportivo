@@ -1,6 +1,10 @@
 package com.unse.gestiondepolideportivo.Modelo;
 
 import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Reserva {
 
@@ -10,36 +14,34 @@ public class Reserva {
     public static final String KEY_ID = BaseColumns._ID;
     public static final String KEY_DNI = "dni";
     public static final String KEY_INSTALACION = "INSTALACION";
-    public static final String KEY_CANTMAY = "cantMayores";
-    public static final String KEY_CANTMEN = "cantMenores";
+    public static final String KEY_CATEGORIA = "categoria";
     public static final String KEY_HRAINI = "hraIni";
     public static final String KEY_HRAFIN = "hraFin";
     public static final String KEY_FECHA = "fecha";
     public static final String KEY_PRECIO = "precio";
+    public static final String KEY_EMPLEADO = "empleado";
 
     private int dni;
     private int id;
     private int categoria;
     private int instalacion;
-    private int cantMayores;
-    private int cantMenores;
     private String hraInicio;
     private String hraFin;
     private String fecha;
-    private float precio;
+    private String precio;
+    private String empleado;
 
-    public Reserva(int dni, int id, int categoria, int instalacion, int cantMayores,
-                   int cantMenores, String hraInicio, String hraFin, String fecha, float precio) {
+    public Reserva(int dni, int id, int categoria, int instalacion, String hraInicio, String hraFin,
+                   String fecha, String precio, String empleado) {
         this.dni = dni;
         this.id = id;
         this.categoria = categoria;
         this.instalacion = instalacion;
-        this.cantMayores = cantMayores;
-        this.cantMenores = cantMenores;
         this.hraInicio = hraInicio;
         this.hraFin = hraFin;
         this.fecha = fecha;
         this.precio = precio;
+        this.empleado = empleado;
     }
 
     public Reserva() {
@@ -47,12 +49,11 @@ public class Reserva {
         this.id = 0;
         this.categoria = 0;
         this.instalacion = 0;
-        this.cantMayores = 0;
-        this.cantMenores = 0;
         this.hraInicio = "";
         this.hraFin = "";
         this.fecha = "";
-        this.precio = 0;
+        this.precio = "";
+        this.empleado = "";
     }
 
     public int getDni() {
@@ -87,22 +88,6 @@ public class Reserva {
         this.instalacion = instalacion;
     }
 
-    public int getCantMayores() {
-        return cantMayores;
-    }
-
-    public void setCantMayores(int cantMayores) {
-        this.cantMayores = cantMayores;
-    }
-
-    public int getCantMenores() {
-        return cantMenores;
-    }
-
-    public void setCantMenores(int cantMenores) {
-        this.cantMenores = cantMenores;
-    }
-
     public String getHraInicio() {
         return hraInicio;
     }
@@ -127,11 +112,27 @@ public class Reserva {
         this.fecha = fecha;
     }
 
-    public float getPrecio() {
+    public String getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(String precio) {
         this.precio = precio;
+    }
+
+    public String getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(String empleado) {
+        this.empleado = empleado;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        Gson gson = new GsonBuilder().create();
+        String json = gson.toJson(this);
+        return json;
     }
 }

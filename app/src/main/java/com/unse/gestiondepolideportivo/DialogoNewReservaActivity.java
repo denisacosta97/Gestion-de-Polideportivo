@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -65,8 +67,6 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
     }
 
     private void loadData() {
-        contadorMeno = contadorMay = 0;
-        updateCounter(contadorMay, contadorMeno);
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categorias);
         dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerCategorias.setAdapter(dataAdapter2);
@@ -76,33 +76,28 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
         mSpinnerInstalaciones.setAdapter(dataAdapter3);
     }
 
-    private void updateCounter(int may, int men) {
-        txtCantidadMay.setText(String.valueOf(may));
-        txtCantidadMen.setText(String.valueOf(men));
-    }
-
     private void loadListener() {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String dni = edtDNI.getText().toString().trim();
                 if(!dni.equals("") && Utils.validarDNI(dni)){
-                    String cantMay = txtCantidadMay.getText().toString();
-                    String cantMen = txtCantidadMen.getText().toString();
                     String categoria = categorias[categoriaSelect];
                     String instalacion = instalaciones[instalacionesSelect];
-                    String horaIni = edtHsIni.toString();
-                    String horaFin = edtHsFin.toString();
+                    String horaIni = edtHsIni.getText().toString();
+                    String horaFin = edtHsFin.getText().toString();
                     String fecha = Utils.getFecha();
-                    float precio = txtTotal.getInputType(); //revisar
-                    if (Integer.parseInt(cantMay) >= 1 || Integer.parseInt(cantMen) >= 1){
-                        ReservaRepo reservaRepo = new ReservaRepo(getContext());
-                        Reserva reserva = new Reserva(Integer.parseInt(dni),-1, categoriaSelect+1,instalacionesSelect+1,
-                               Integer.parseInt(cantMay), Integer.parseInt(cantMen), horaIni, horaFin, fecha, precio);
-                        reservaRepo.insert(reserva);
-                    }else{
-                        Utils.showToast(getContext(), "¡Al menos debe haber un ingreso!");
-                    }
+                    String precio = txtTotal.getText().toString();
+                    String dniEmpleado = Utils.DNI_TRABAJADOR;
+
+                    ReservaRepo reservaRepo = new ReservaRepo(getContext());
+                    Reserva reserva = new Reserva(Integer.parseInt(dni),-1,
+                            categoriaSelect+1,instalacionesSelect+1, horaIni,
+                            horaFin, fecha, precio, dniEmpleado);
+                    reservaRepo.insert(reserva);
+                    Utils.showToast(getContext(), "Reserva registrada.");
+                    dismiss();
+
                 }else{
                     Utils.showToast(getContext(),"¡Ingrese un DNI!");
                 }
@@ -114,6 +109,8 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoriaSelect = position;
                 txtTotal.setText("");
+                InputMethodManager imm = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
 
             @Override
@@ -129,6 +126,8 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
                 float precioTotal = calcularPrecio(categoriaSelect+1, instalacionesSelect+1);
                 String precio = Float.toString(precioTotal);
                 txtTotal.setText("$" + precio);
+                InputMethodManager imm = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
 
             @Override
@@ -137,10 +136,6 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
             }
         });
 
-        btnMasMay.setOnClickListener(this);
-        btnMasMen.setOnClickListener(this);
-        btnMenosMay.setOnClickListener(this);
-        btnMenosMen.setOnClickListener(this);
         edtHsIni.setOnClickListener(this);
         edtHsFin.setOnClickListener(this);
     }
@@ -187,10 +182,6 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
         edtDNI = view.findViewById(R.id.edtDNI);
         txtCantidadMay = view.findViewById(R.id.txtCantidadMay);
         txtCantidadMen = view.findViewById(R.id.txtCantidadMen);
-        btnMasMay = view.findViewById(R.id.btnAddMay);
-        btnMenosMay = view.findViewById(R.id.btnRemoveMay);
-        btnMasMen = view.findViewById(R.id.btnAddMen);
-        btnMenosMen = view.findViewById(R.id.btnRemoveMen);
         txtTotal = view.findViewById(R.id.txtTotal);
         mSpinnerCategorias = view.findViewById(R.id.spineer);
         mSpinnerInstalaciones = view.findViewById(R.id.spineer2);
@@ -230,30 +221,6 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btnAddMay:
-                contadorMay++;
-                updateCounter(contadorMay, contadorMeno);
-                break;
-            case R.id.btnRemoveMay:
-                if (contadorMay <= 0){
-                    contadorMay = 0;
-                }else{
-                    contadorMay--;
-                }
-                updateCounter(contadorMay, contadorMeno);
-                break;
-            case R.id.btnAddMen:
-                contadorMeno++;
-                updateCounter(contadorMay, contadorMeno);
-                break;
-            case R.id.btnRemoveMen:
-                if (contadorMeno <= 0){
-                    contadorMeno = 0;
-                }else{
-                    contadorMeno--;
-                }
-                updateCounter(contadorMay, contadorMeno);
-                break;
             case R.id.edtHraIni:
                 showTimeDialog(0);
                 break;

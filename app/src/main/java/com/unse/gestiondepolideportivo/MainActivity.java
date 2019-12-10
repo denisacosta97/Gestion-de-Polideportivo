@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnSalir:
                 prefManager = new PreferenciasManager(this);
                 prefManager.setFirstTimeLaunch(true);
-                finish();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
         }
 

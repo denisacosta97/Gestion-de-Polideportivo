@@ -33,13 +33,13 @@ public class ReservaRepo {
                 Reserva.TABLE,
                 Reserva.KEY_ID, Utils.INT_TYPE, Utils.AUTO_INCREMENT,
                 Reserva.KEY_DNI, Utils.INT_TYPE, Utils.NULL_TYPE,
+                Reserva.KEY_CATEGORIA, Utils.INT_TYPE, Utils.NULL_TYPE,
                 Reserva.KEY_INSTALACION, Utils.INT_TYPE, Utils.NULL_TYPE,
-                Reserva.KEY_CANTMAY, Utils.INT_TYPE, Utils.NULL_TYPE,
-                Reserva.KEY_CANTMEN, Utils.INT_TYPE, Utils.NULL_TYPE,
                 Reserva.KEY_HRAINI, Utils.STRING_TYPE, Utils.NULL_TYPE,
                 Reserva.KEY_HRAFIN, Utils.STRING_TYPE, Utils.NULL_TYPE,
                 Reserva.KEY_FECHA, Utils.STRING_TYPE, Utils.NULL_TYPE,
-                Reserva.KEY_PRECIO, Utils.FLOAT_TYPE, Utils.NULL_TYPE);
+                Reserva.KEY_PRECIO, Utils.FLOAT_TYPE, Utils.NULL_TYPE,
+                Reserva.KEY_EMPLEADO, Utils.FLOAT_TYPE, Utils.NULL_TYPE);
     }
 
     private ContentValues loadValues(Reserva reserva, int tipo) {
@@ -47,13 +47,13 @@ public class ReservaRepo {
         if (tipo != 1)
             values.put(Reserva.KEY_ID, reserva.getId());
         values.put(Reserva.KEY_DNI, reserva.getDni());
+        values.put(Reserva.KEY_CATEGORIA, reserva.getCategoria());
         values.put(Reserva.KEY_INSTALACION, reserva.getInstalacion());
-        values.put(Reserva.KEY_CANTMAY, reserva.getCantMayores());
-        values.put(Reserva.KEY_CANTMEN, reserva.getCantMenores());
-        values.put(Reserva.KEY_FECHA,reserva.getFecha());
         values.put(Reserva.KEY_HRAINI, reserva.getHraInicio());
         values.put(Reserva.KEY_HRAFIN, reserva.getHraFin());
+        values.put(Reserva.KEY_FECHA,reserva.getFecha());
         values.put(Reserva.KEY_PRECIO, reserva.getPrecio());
+        values.put(Reserva.KEY_EMPLEADO, reserva.getEmpleado());
 
         return values;
     }
@@ -63,12 +63,12 @@ public class ReservaRepo {
         mReserva.setId(cursor.getInt(0));
         mReserva.setDni(cursor.getInt(1));
         mReserva.setCategoria(cursor.getInt(2));
-        mReserva.setCantMayores(cursor.getInt(3));
-        mReserva.setCantMenores(cursor.getInt(4));
-        mReserva.setHraInicio(cursor.getString(5));
-        mReserva.setHraFin(cursor.getString(6));
-        mReserva.setFecha(cursor.getString(7));
-        mReserva.setPrecio(cursor.getInt(8));
+        mReserva.setInstalacion(cursor.getInt(3));
+        mReserva.setHraInicio(cursor.getString(4));
+        mReserva.setHraFin(cursor.getString(5));
+        mReserva.setFecha(cursor.getString(6));
+        mReserva.setPrecio(cursor.getString(7));
+        mReserva.setEmpleado(cursor.getString(8));
 
         return mReserva;
     }
@@ -127,6 +127,44 @@ public class ReservaRepo {
         DBManager.getInstance().closeDatabase();
         cursor.close();
         return count;
+    }
+
+    public ArrayList<String> getAllFechas() {
+        SQLiteDatabase db = DBManager.getInstance().openDatabase();
+        ArrayList<String> list = new ArrayList<String>();
+        String query = String.format("select * from %s", Reserva.TABLE);
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                mReserva = loadFromCursor(cursor);
+                String fecha = Utils.getFechaOnlyDay(Utils.getFechaDate(mReserva.getFecha()));
+                if (!list.contains(fecha))
+                    list.add(fecha);
+            } while (cursor.moveToNext());
+        }
+        DBManager.getInstance().closeDatabase();
+        cursor.close();
+
+        return list;
+    }
+
+    public ArrayList<Reserva> getAllByFecha(String fecha) {
+        SQLiteDatabase db = DBManager.getInstance().openDatabase();
+        ArrayList<Reserva> list = new ArrayList<Reserva>();
+        String query = String.format("select * from %s", Reserva.TABLE);
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                mReserva = loadFromCursor(cursor);
+                String f = Utils.getFechaOnlyDay(Utils.getFechaDate(mReserva.getFecha()));
+                if (fecha.equals(f))
+                    list.add(mReserva);
+            } while (cursor.moveToNext());
+        }
+        DBManager.getInstance().closeDatabase();
+        cursor.close();
+
+        return list;
     }
 
     public ArrayList<Reserva> getAll() {

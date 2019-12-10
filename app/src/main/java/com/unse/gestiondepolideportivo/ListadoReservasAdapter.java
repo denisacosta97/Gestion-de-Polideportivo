@@ -63,8 +63,6 @@ public class ListadoReservasAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 ItemDatoReserva dateItem = (ItemDatoReserva) lista.get(position);
                 DateViewHolder dateViewHolder = (DateViewHolder) viewHolder;
                 dateViewHolder.txtDNI.setText(String.valueOf(dateItem.getReserva().getDni()));
-                dateViewHolder.txtCantMenor.setText(String.valueOf(dateItem.getReserva().getCantMenores()));
-                dateViewHolder.txtCantidadMay.setText(String.valueOf(dateItem.getReserva().getCantMayores()));
                 dateViewHolder.txtCategoria.setText(getCategoria(dateItem.getTipo()-1));
                 dateViewHolder.txtInstalaciones.setText(getInstalaciones(dateItem.getTipo()-1));
                 break;
@@ -85,13 +83,11 @@ public class ListadoReservasAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     //ViewHolder for date row item
     class DateViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtDNI, txtCantidadMay, txtCantMenor, txtInstalaciones, txtCategoria;
+        private TextView txtDNI, txtInstalaciones, txtCategoria;
 
         DateViewHolder(View v) {
             super(v);
             txtDNI = v.findViewById(R.id.txtDNI);
-            txtCantidadMay = v.findViewById(R.id.txtMayor);
-            txtCantMenor = v.findViewById(R.id.txtMenor);
             txtCategoria = v.findViewById(R.id.txtCategoria);
             txtInstalaciones = v.findViewById(R.id.txtInstalaciones);
         }

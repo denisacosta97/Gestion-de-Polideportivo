@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,16 +33,17 @@ public class LoginActivity extends AppCompatActivity {
 
             mDni = findViewById(R.id.edtDocumento);
             mIngreso = findViewById(R.id.btnIngreso);
-
             mIngreso.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    launchHomeScreen();
+                    if(Utils.validarDNI(mDni.getText().toString())){
+                        prefManager.setValue("dni", mDni.getText().toString());
+                        launchHomeScreen();
+                    }else
+                        Toast.makeText(LoginActivity.this, "Ingrese un DNI válido", Toast.LENGTH_SHORT).show();
                 }
             });
-
         }
-
     }
 
     private void launchHomeScreen() {

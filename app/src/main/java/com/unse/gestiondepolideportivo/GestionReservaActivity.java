@@ -69,6 +69,7 @@ public class GestionReservaActivity extends AppCompatActivity implements View.On
                         startActivity(new Intent(getApplicationContext(), ListadoReservaActivity.class));
                         break;
                     case 3:
+                        startActivity(new Intent(getApplicationContext(), EnviarDatosReservasActivity.class));
                         break;
                 }
 

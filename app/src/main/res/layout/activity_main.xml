@@ -55,11 +55,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_logo_bienestar_01"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
