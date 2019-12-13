@@ -65,6 +65,7 @@ public class ListadoReservasAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 dateViewHolder.txtDNI.setText(String.valueOf(dateItem.getReserva().getDni()));
                 dateViewHolder.txtCategoria.setText(getCategoria(dateItem.getTipo()-1));
                 dateViewHolder.txtInstalaciones.setText(getInstalaciones(dateItem.getTipo()-1));
+                dateViewHolder.txtPrecio.setText(String.valueOf(dateItem.getReserva().getPrecio()));
                 break;
         }
 
@@ -72,7 +73,7 @@ public class ListadoReservasAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public String getCategoria(int i){
-        String[] categorias = {"Estudiante","Docente","No Docente","Afiliado","Particular"};
+        String[] categorias = {"Afiliado", "Docente", "Egresado", "Estudiante", "Jubilado", "Nodocente", "Particular"};
         return categorias[i];
     }
 
@@ -83,13 +84,15 @@ public class ListadoReservasAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     //ViewHolder for date row item
     class DateViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtDNI, txtInstalaciones, txtCategoria;
+        private TextView txtDNI, txtInstalaciones, txtCategoria, txtPrecio;
 
         DateViewHolder(View v) {
             super(v);
             txtDNI = v.findViewById(R.id.txtDNI);
             txtCategoria = v.findViewById(R.id.txtCategoria);
             txtInstalaciones = v.findViewById(R.id.txtInstalaciones);
+            txtPrecio = v.findViewById(R.id.txtPrecio);
+
         }
     }
 

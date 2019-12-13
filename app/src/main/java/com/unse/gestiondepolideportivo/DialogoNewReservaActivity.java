@@ -37,8 +37,46 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
     Button btnAceptar;
     TextView txtCantidadMay, txtCantidadMen, txtTotal;
     Spinner mSpinnerCategorias, mSpinnerInstalaciones;
-    String[] categorias = {"Estudiante","Docente","No Docente","Afiliado","Particular"};
+    String[] categorias = {"Afiliado", "Docente", "Egresado", "Estudiante", "Jubilado", "Nodocente", "Particular"};
     String[] instalaciones = {"Quincho Gris","Quincho Marrón","SUM"};
+
+    private float calcularPrecio(int categ, int inst) {
+        float precio = 0;
+
+        switch (categ){
+            case 4:
+                //Estudiantes
+                if(inst == 1 || inst == 2)
+                    precio = 1200;
+                else
+                    precio = 3000;
+                break;
+            case 5:
+
+            case 1:
+                //Afiliados
+                if(inst == 1 || inst == 2)
+                    precio = 1100;
+                else
+                    precio = 2750;
+                break;
+            case 7:
+                //Particular
+                if(inst == 1 || inst == 2)
+                    precio = 2200;
+                else
+                    precio = 5500;
+                break;
+            default:
+                //Docentes, Nodocentes y Egresados
+                if(inst == 1 || inst == 2)
+                    precio = 1850;
+                else
+                    precio = 4000;
+                break;
+        }
+        return precio;
+    }
 
     int contadorMay = 0, contadorMeno = 0, categoriaSelect = 0, instalacionesSelect = 0;
     String categoria, instalacion;
@@ -138,42 +176,6 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
 
         edtHsIni.setOnClickListener(this);
         edtHsFin.setOnClickListener(this);
-    }
-
-    private float calcularPrecio(int categ, int inst) {
-        float precio = 0;
-
-        switch (categ){
-            case 1:
-                //Estudiantes
-                if(inst == 1 || inst == 2)
-                    precio = 1200;
-                else
-                    precio = 3000;
-                break;
-            case 4:
-                //Afiliados
-                if(inst == 1 || inst == 2)
-                    precio = 1100;
-                else
-                    precio = 2750;
-                break;
-            case 5:
-                //Particular
-                if(inst == 1 || inst == 2)
-                    precio = 2200;
-                else
-                    precio = 5500;
-                break;
-            default:
-                //Docentes, Nodocentes y Egresados
-                if(inst == 1 || inst == 2)
-                    precio = 1850;
-                else
-                    precio = 4000;
-                break;
-        }
-        return precio;
     }
 
 

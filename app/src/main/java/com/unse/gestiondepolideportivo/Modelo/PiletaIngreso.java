@@ -18,7 +18,6 @@ public class PiletaIngreso {
     public static final String KEY_CANTMEN = "cantMenores";
     public static final String KEY_FECHA = "fecha";
     public static final String KEY_PRECIO1 = "precio1";
-    public static final String KEY_PRECIO2 = "precio2";
     public static final String KEY_EMPLEADO = "dniEmpleado";
 
     private int dni;
@@ -28,7 +27,6 @@ public class PiletaIngreso {
     private int cantMenores;
     private String fecha;
     private float precio1;
-    private float precio2;
     private int dniEmpleado;
 
     public PiletaIngreso() {
@@ -39,11 +37,10 @@ public class PiletaIngreso {
         this.cantMenores = 0;
         this.fecha = null;
         this.precio1 = 0f;
-        this.precio2 = 0f;
     }
 
     public PiletaIngreso(int dni, int id, int categoria, int cantMayores, int cantMenores, String fecha,
-                         float precio1, float precio2, int dniEm) {
+                         float precio1, int dniEm) {
         this.dni = dni;
         this.id = id;
         this.categoria = categoria;
@@ -51,7 +48,6 @@ public class PiletaIngreso {
         this.cantMenores = cantMenores;
         this.fecha = fecha;
         this.precio1 = precio1;
-        this.precio2 = precio2;
         this.dniEmpleado = dniEm;
     }
 
@@ -117,14 +113,6 @@ public class PiletaIngreso {
 
     public void setPrecio1(float precio1) {
         this.precio1 = precio1;
-    }
-
-    public float getPrecio2() {
-        return precio2;
-    }
-
-    public void setPrecio2(float precio2) {
-        this.precio2 = precio2;
     }
 
     @Override

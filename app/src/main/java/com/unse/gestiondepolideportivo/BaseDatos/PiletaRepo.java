@@ -29,7 +29,7 @@ public class PiletaRepo {
     }
 
     static String createTable() {
-        return String.format("create table %s(%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s, %s %s %s)",
+        return String.format("create table %s(%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s, %s %s %s)",
                 PiletaIngreso.TABLE,
                 PiletaIngreso.KEY_ID, Utils.INT_TYPE, Utils.AUTO_INCREMENT,
                 PiletaIngreso.KEY_DNI, Utils.INT_TYPE, Utils.NULL_TYPE,
@@ -38,7 +38,6 @@ public class PiletaRepo {
                 PiletaIngreso.KEY_CANTMEN, Utils.INT_TYPE, Utils.NULL_TYPE,
                 PiletaIngreso.KEY_FECHA, Utils.STRING_TYPE, Utils.NULL_TYPE,
                 PiletaIngreso.KEY_PRECIO1, Utils.FLOAT_TYPE, Utils.NULL_TYPE,
-                PiletaIngreso.KEY_PRECIO2, Utils.FLOAT_TYPE, Utils.NULL_TYPE,
                 PiletaIngreso.KEY_EMPLEADO, Utils.INT_TYPE, Utils.NULL_TYPE);
     }
 
@@ -52,7 +51,6 @@ public class PiletaRepo {
         values.put(PiletaIngreso.KEY_CANTMEN, pileta.getCantMenores());
         values.put(PiletaIngreso.KEY_FECHA, pileta.getFecha());
         values.put(PiletaIngreso.KEY_PRECIO1, pileta.getPrecio1());
-        values.put(PiletaIngreso.KEY_PRECIO2, pileta.getPrecio2());
         values.put(PiletaIngreso.KEY_EMPLEADO, pileta.getDniEmpleado());
 
         return values;
@@ -67,8 +65,7 @@ public class PiletaRepo {
         mPiletaIngreso.setCantMenores(cursor.getInt(4));
         mPiletaIngreso.setFecha(cursor.getString(5));
         mPiletaIngreso.setPrecio1(cursor.getInt(6));
-        mPiletaIngreso.setPrecio2(cursor.getInt(7));
-        mPiletaIngreso.setDniEmpleado(cursor.getInt(8));
+        mPiletaIngreso.setDniEmpleado(cursor.getInt(7));
 
         return mPiletaIngreso;
     }

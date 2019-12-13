@@ -29,12 +29,12 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
     View view;
     ImageButton btnMasMay, btnMasMen, btnMenosMay, btnMenosMen;
     EditText edtDNI;
-    Button btnAceptar;
+    Button btnAceptar, btnDia, btnSemana, btnMes;
     TextView txtCantidadMay, txtCantidadMen, txtTotal;
     Spinner mSpinnerCategorias;
-    String[] categorias = {"Estudiante","Docente","No Docente","Afiliado","Particular"};
+    String[] categorias = {"Afiliado", "Docente", "Egresado", "Estudiante", "Jubilado", "Nodocente", "Particular"};
 
-    int contadorMay = 0, contadorMeno = 0, categoriaSelect = 0;
+    int contadorMay = 0, contadorMeno = 0, categoriaSelect = 0, tipo = -1;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
                     if (contadorMay >= 1 || contadorMeno >= 1){
                         PiletaRepo piletaRepo = new PiletaRepo(getContext());
                         PiletaIngreso piletaIngreso = new PiletaIngreso(Integer.parseInt(dni),-1, categoriaSelect+1,
-                                contadorMay, contadorMeno,fecha, 20f, 20f, 40657677);
+                                contadorMay, contadorMeno, fecha, 20f, 40657677);
                         piletaRepo.insert(piletaIngreso);
                         dismiss();
                     }else{
@@ -95,6 +95,8 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoriaSelect = position;
+                float precioTotal = calcularPrecio(categoriaSelect+1);
+                String precio = Float.toString(precioTotal);
             }
 
             @Override
@@ -106,10 +108,17 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
         btnMasMen.setOnClickListener(this);
         btnMenosMay.setOnClickListener(this);
         btnMenosMen.setOnClickListener(this);
+        btnDia.setOnClickListener(this);
+        btnSemana.setOnClickListener(this);
+        btnMes.setOnClickListener(this);
+
     }
 
     private void loadViews() {
         btnAceptar = view.findViewById(R.id.btnAceptar);
+        btnDia = view.findViewById(R.id.btnDia);
+        btnSemana = view.findViewById(R.id.btnSemana);
+        btnMes = view.findViewById(R.id.btnMes);
         edtDNI = view.findViewById(R.id.edtDNI);
         txtCantidadMay = view.findViewById(R.id.txtCantidadMay);
         txtCantidadMen = view.findViewById(R.id.txtCantidadMen);
@@ -120,6 +129,30 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
         txtTotal = view.findViewById(R.id.txtTotal);
         mSpinnerCategorias = view.findViewById(R.id.spineer);
 
+    }
+
+    private float calcularPrecio(int categ) {
+        float precio = 0;
+
+        switch (categ){
+            case 1:
+                //Afiliados
+                precio = 0;
+                break;
+            case 2:
+                //Estudiantes
+                precio = 50;
+                break;
+            case 5:
+                //Particular
+                precio = 250;
+                break;
+            default:
+                //Docentes, Nodocentes y Egresados
+                precio = 100;
+                break;
+        }
+        return precio;
     }
 
     @Override
@@ -148,6 +181,15 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
                     contadorMeno--;
                 }
                 updateCounter(contadorMay, contadorMeno);
+                break;
+            case R.id.btnDia:
+                tipo = 0;
+                break;
+            case R.id.btnSemana:
+                tipo = 1;
+                break;
+            case R.id.btnMes:
+                tipo = 2;
                 break;
         }
 

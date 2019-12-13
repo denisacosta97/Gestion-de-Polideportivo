@@ -66,6 +66,7 @@ public class ListadoIngresosAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 dateViewHolder.txtCantMenor.setText(String.valueOf(dateItem.getPiletaIngreso().getCantMenores()));
                 dateViewHolder.txtCantidadMay.setText(String.valueOf(dateItem.getPiletaIngreso().getCantMayores()));
                 dateViewHolder.txtCategoria.setText(getCategoria(dateItem.getPiletaIngreso().getCategoria()-1));
+                dateViewHolder.txtPrecio.setText(String.valueOf(dateItem.getPiletaIngreso().getPrecio1()));
                 break;
         }
 
@@ -73,14 +74,14 @@ public class ListadoIngresosAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public String getCategoria(int i){
-        String[] categorias = {"Estudiante","Docente","No Docente","Afiliado","Particular"};
+        String[] categorias = {"Afiliado", "Docente", "Egresado", "Estudiante", "Jubilado", "Nodocente", "Particular"};
        return categorias[i];
     }
 
 
     //ViewHolder for date row item
     class DateViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtDNI, txtCantidadMay, txtCantMenor, txtTotal, txtCategoria;
+        private TextView txtDNI, txtCantidadMay, txtCantMenor, txtPrecio, txtCategoria;
 
          DateViewHolder(View v) {
             super(v);
@@ -88,6 +89,7 @@ public class ListadoIngresosAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             txtCantidadMay = v.findViewById(R.id.txtMayor);
             txtCantMenor = v.findViewById(R.id.txtMenor);
             txtCategoria = v.findViewById(R.id.txtCategoria);
+            txtPrecio = v.findViewById(R.id.txtPrecio);
         }
     }
 

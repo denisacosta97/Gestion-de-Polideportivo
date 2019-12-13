@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_inicio"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="70dp"
     android:layout_margin="5dp"
     android:clickable="true"
     android:focusable="true"
@@ -14,9 +14,50 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:textStyle="bold"
+            android:text="DNI"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:textStyle="bold"
+            android:text="Categoría"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:textStyle="bold"
+            android:text="Instalación"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:textStyle="bold"
+            android:text="Precio"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:orientation="horizontal"
+        android:paddingTop="10dp"
         android:weightSum="1">
 
         <TextView
@@ -30,44 +71,6 @@
             android:textColor="@color/colorBlack"
             android:textSize="18sp"
             android:textStyle="bold" />
-
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="0.10"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/txtMayor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/colorBlack"
-                android:text="10"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="0.10"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/txtMenor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="10"
-                android:textColor="@color/colorBlack"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/txtCategoria"
@@ -85,11 +88,23 @@
             android:id="@+id/txtInstalaciones"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.30"
+            android:layout_weight="0.25"
             android:gravity="center"
             android:layout_gravity="center"
             android:textColor="@color/colorBlack"
             android:text="Quincho marrón"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtPrecio"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/colorMoney"
+            android:text="$4000"
             android:textSize="18sp"
             android:textStyle="bold" />
 
