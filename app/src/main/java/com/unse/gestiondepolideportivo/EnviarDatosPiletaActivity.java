@@ -51,7 +51,6 @@ public class EnviarDatosPiletaActivity extends AppCompatActivity implements View
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, fechas);
         dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(dataAdapter2);
-
     }
 
     private String[] getFechas() {

@@ -39,11 +39,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_man" />
-
             <TextView
                 android:id="@+id/txtMayor"
                 android:layout_width="match_parent"
@@ -62,11 +57,6 @@
             android:layout_weight="0.15"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_boy_face" />
 
             <TextView
                 android:id="@+id/txtMenor"

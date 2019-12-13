@@ -127,7 +127,7 @@ public class ListadoReservaActivity extends AppCompatActivity implements View.On
         setSupportActionBar(mToolbar);
         findViewById(R.id.imgFlecha).setVisibility(View.VISIBLE);
         findViewById(R.id.imgFlecha).setOnClickListener(this);
-        ((TextView)findViewById(R.id.txtTitulo)).setText("Listado de Ingresos");
+        ((TextView)findViewById(R.id.txtTitulo)).setText("Listado de reservas");
     }
 
     @Override

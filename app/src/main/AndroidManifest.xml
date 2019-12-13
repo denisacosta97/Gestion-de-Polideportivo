@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".EnviarDatosReservasActivity"></activity>
-        <activity android:name=".ListadoReservaActivity" />
-        <activity android:name=".DialogoNewReservaActivity" />
-        <activity android:name=".GestionReservaActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ListadoReservaActivity"/>
+        <activity android:name=".DialogoNewReservaActivity"/>
+        <activity android:name=".GestionReservaActivity"/>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

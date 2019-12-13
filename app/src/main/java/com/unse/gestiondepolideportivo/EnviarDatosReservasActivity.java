@@ -96,7 +96,7 @@ public class EnviarDatosReservasActivity extends AppCompatActivity implements Vi
         setSupportActionBar(mToolbar);
         findViewById(R.id.imgFlecha).setVisibility(View.VISIBLE);
         findViewById(R.id.imgFlecha).setOnClickListener(this);
-        ((TextView) findViewById(R.id.txtTitulo)).setText("Envío de Datos");
+        ((TextView) findViewById(R.id.txtTitulo)).setText("Envío de datos reservas");
     }
 
     @Override
