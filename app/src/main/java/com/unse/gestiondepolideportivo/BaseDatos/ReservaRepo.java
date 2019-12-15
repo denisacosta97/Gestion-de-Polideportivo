@@ -38,8 +38,8 @@ public class ReservaRepo {
                 Reserva.KEY_HRAINI, Utils.STRING_TYPE, Utils.NULL_TYPE,
                 Reserva.KEY_HRAFIN, Utils.STRING_TYPE, Utils.NULL_TYPE,
                 Reserva.KEY_FECHA, Utils.STRING_TYPE, Utils.NULL_TYPE,
-                Reserva.KEY_PRECIO, Utils.FLOAT_TYPE, Utils.NULL_TYPE,
-                Reserva.KEY_EMPLEADO, Utils.FLOAT_TYPE, Utils.NULL_TYPE);
+                Reserva.KEY_PRECIO, Utils.STRING_TYPE, Utils.NULL_TYPE,
+                Reserva.KEY_EMPLEADO, Utils.STRING_TYPE, Utils.NULL_TYPE);
     }
 
     private ContentValues loadValues(Reserva reserva, int tipo) {

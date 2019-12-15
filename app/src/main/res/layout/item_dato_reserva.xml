@@ -69,31 +69,31 @@
             android:gravity="center"
             android:text="40657677"
             android:textColor="@color/colorBlack"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtCategoria"
+            android:id="@+id/txtCategoria2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:gravity="center"
             android:layout_gravity="center"
             android:textColor="@color/colorBlack"
-            android:text="Estudiante"
-            android:textSize="18sp"
+            android:text="Jubilado"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtInstalaciones"
+            android:id="@+id/txtInstalaciones2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:gravity="center"
             android:layout_gravity="center"
             android:textColor="@color/colorBlack"
-            android:text="Quincho marrón"
-            android:textSize="18sp"
+            android:text="Quincho gris"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
@@ -105,7 +105,7 @@
             android:layout_gravity="center"
             android:textColor="@color/colorMoney"
             android:text="$4000"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
     </LinearLayout>

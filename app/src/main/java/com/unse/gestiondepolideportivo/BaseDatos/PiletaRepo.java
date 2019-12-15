@@ -64,7 +64,7 @@ public class PiletaRepo {
         mPiletaIngreso.setCantMayores(cursor.getInt(3));
         mPiletaIngreso.setCantMenores(cursor.getInt(4));
         mPiletaIngreso.setFecha(cursor.getString(5));
-        mPiletaIngreso.setPrecio1(cursor.getInt(6));
+        mPiletaIngreso.setPrecio1(cursor.getFloat(6));
         mPiletaIngreso.setDniEmpleado(cursor.getInt(7));
 
         return mPiletaIngreso;

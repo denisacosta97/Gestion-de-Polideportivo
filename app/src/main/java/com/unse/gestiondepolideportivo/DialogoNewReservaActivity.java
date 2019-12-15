@@ -31,55 +31,15 @@ import java.util.Calendar;
 public class DialogoNewReservaActivity extends DialogFragment implements View.OnClickListener {
 
     View view;
-    ImageButton btnMasMay, btnMasMen, btnMenosMay, btnMenosMen;
     EditText edtDNI, edtHsIni, edtHsFin;
     Context mContext;
     Button btnAceptar;
     TextView txtCantidadMay, txtCantidadMen, txtTotal;
     Spinner mSpinnerCategorias, mSpinnerInstalaciones;
-    String[] categorias = {"Afiliado", "Docente", "Egresado", "Estudiante", "Jubilado", "Nodocente", "Particular"};
-    String[] instalaciones = {"Quincho Gris","Quincho Marrón","SUM"};
+    String[] categorias = {"Seleccione una opción...", "Afiliado", "Docente", "Egresado", "Estudiante", "Jubilado", "Nodocente", "Particular"};
+    String[] instalaciones = {"Seleccione una opción...", "Quincho Gris","Quincho Marrón","SUM"};
 
-    private float calcularPrecio(int categ, int inst) {
-        float precio = 0;
-
-        switch (categ){
-            case 4:
-                //Estudiantes
-                if(inst == 1 || inst == 2)
-                    precio = 1200;
-                else
-                    precio = 3000;
-                break;
-            case 5:
-
-            case 1:
-                //Afiliados
-                if(inst == 1 || inst == 2)
-                    precio = 1100;
-                else
-                    precio = 2750;
-                break;
-            case 7:
-                //Particular
-                if(inst == 1 || inst == 2)
-                    precio = 2200;
-                else
-                    precio = 5500;
-                break;
-            default:
-                //Docentes, Nodocentes y Egresados
-                if(inst == 1 || inst == 2)
-                    precio = 1850;
-                else
-                    precio = 4000;
-                break;
-        }
-        return precio;
-    }
-
-    int contadorMay = 0, contadorMeno = 0, categoriaSelect = 0, instalacionesSelect = 0;
-    String categoria, instalacion;
+    int categoriaSelect = 0, instalacionesSelect = 0;
 
     public void setContext(Context ctx){
         this.mContext = ctx;
@@ -100,6 +60,10 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
         loadData();
 
         loadListener();
+
+        float precioTotal = calcularPrecio(categoriaSelect, instalacionesSelect);
+        String precio = Float.toString(precioTotal);
+        txtTotal.setText("$" + precio);
 
         return view;
     }
@@ -130,7 +94,7 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
 
                     ReservaRepo reservaRepo = new ReservaRepo(getContext());
                     Reserva reserva = new Reserva(Integer.parseInt(dni),-1,
-                            categoriaSelect+1,instalacionesSelect+1, horaIni,
+                            categoriaSelect,instalacionesSelect, horaIni,
                             horaFin, fecha, precio, dniEmpleado);
                     reservaRepo.insert(reserva);
                     Utils.showToast(getContext(), "Reserva registrada.");
@@ -161,7 +125,8 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 instalacionesSelect = position;
-                float precioTotal = calcularPrecio(categoriaSelect+1, instalacionesSelect+1);
+                txtTotal.setText("");
+                float precioTotal = calcularPrecio(categoriaSelect, instalacionesSelect);
                 String precio = Float.toString(precioTotal);
                 txtTotal.setText("$" + precio);
                 InputMethodManager imm = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -178,7 +143,6 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
         edtHsFin.setOnClickListener(this);
     }
 
-
     private void loadViews() {
         btnAceptar = view.findViewById(R.id.btnAceptar);
         edtDNI = view.findViewById(R.id.edtDNI);
@@ -189,6 +153,72 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
         mSpinnerInstalaciones = view.findViewById(R.id.spineer2);
         edtHsIni = view.findViewById(R.id.edtHraIni);
         edtHsFin = view.findViewById(R.id.edtHraFin);
+    }
+
+    private float calcularPrecio(int categ, int inst) {
+        float precio = 0;
+
+        switch (categ){
+            case 0:
+                precio = 0;
+                break;
+            case 1:
+                //Afiliados
+                if(inst == 1 || inst == 2) {
+                    precio = 1100;
+                }
+                else {
+                    if(inst != 0) {
+                        precio = 2750;
+                    }
+                }
+                break;
+            case 4:
+                //Estudiantes
+                if(inst == 1 || inst == 2) {
+                    precio = 1200;
+                }
+                else {
+                    if(inst != 0) {
+                        precio = 3000;
+                    }
+                }
+                break;
+            case 5:
+                //Jubilado
+                if(inst == 1 || inst == 2) {
+                    precio = 925;
+                }
+                else {
+                    if(inst != 0) {
+                        precio = 2000;
+                    }
+                }
+                break;
+            case 7:
+                //Particular
+                if(inst == 1 || inst == 2) {
+                    precio = 2200;
+                }
+                else {
+                    if(inst != 0) {
+                        precio = 5500;
+                    }
+                }
+                break;
+            default:
+                //Docentes, Nodocentes y Egresados
+                if(inst == 1 || inst == 2) {
+                    precio = 1850;
+                }
+                else {
+                    if(inst != 0) {
+                        precio = 4000;
+                    }
+                }
+                break;
+        }
+        return precio;
     }
 
     private void showTimeDialog(final int edt){

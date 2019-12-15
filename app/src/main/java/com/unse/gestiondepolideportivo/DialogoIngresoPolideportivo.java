@@ -1,5 +1,6 @@
 package com.unse.gestiondepolideportivo;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,7 +28,7 @@ import com.unse.gestiondepolideportivo.BaseDatos.PiletaRepo;
 import com.unse.gestiondepolideportivo.Modelo.PiletaIngreso;
 import com.unse.gestiondepolideportivo.Modelo.PiletaIngresoPorFechas;
 
-public class DialogoIngresoPolideportivo extends DialogFragment implements View.OnClickListener {
+public class DialogoIngresoPolideportivo extends DialogFragment  implements View.OnClickListener {
 
     View view;
     ImageButton btnMasMay, btnMasMen, btnMenosMay, btnMenosMen;
@@ -33,7 +36,7 @@ public class DialogoIngresoPolideportivo extends DialogFragment implements View.
     Button btnAceptar, btnDia, btnSemana, btnMes;
     TextView txtCantidadMay, txtCantidadMen, txtTotal;
     Spinner mSpinnerCategorias;
-    String[] categorias = {"Afiliado", "Docente", "Egresado", "Estudiante", "Jubilado", "Nodocente", "Particular"};
+    String[] categorias = {"Seleccione una opción...", "Afiliado", "Docente", "Egresado", "Estudiante", "Jubilado", "Nodocente", "Particular"};
 
     int contadorMay = 0, contadorMeno = 0, categoriaSelect = 0, tipo = 0;
 
@@ -62,7 +65,6 @@ public class DialogoIngresoPolideportivo extends DialogFragment implements View.
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categorias);
         dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerCategorias.setAdapter(dataAdapter2);
-        btnDia.setEnabled(false);
     }
 
     private void updateCounter(int may, int men) {
@@ -81,10 +83,10 @@ public class DialogoIngresoPolideportivo extends DialogFragment implements View.
                     String categoria = categorias[categoriaSelect];
                     String fecha = Utils.getFecha();
                     if (contadorMay >= 1 || contadorMeno >= 1) {
-                        float precio = calcularPrecio(categoriaSelect + 1);
+                        float precio = calcularPrecio(categoriaSelect);
                         float precioFinal = contadorMay * precio + contadorMeno * precio;
                         PiletaRepo piletaRepo = new PiletaRepo(getContext());
-                        PiletaIngreso piletaIngreso = new PiletaIngreso(Integer.parseInt(dni), -1, categoriaSelect + 1,
+                        PiletaIngreso piletaIngreso = new PiletaIngreso(Integer.parseInt(dni), -1, categoriaSelect,
                                 contadorMay, contadorMeno, fecha, precioFinal, Integer.parseInt(dniEmpelado));
                         piletaRepo.insert(piletaIngreso);
                         if (tipo != 0) {
@@ -104,7 +106,9 @@ public class DialogoIngresoPolideportivo extends DialogFragment implements View.
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoriaSelect = position;
-                float precioTotal = calcularPrecio(categoriaSelect + 1);
+                InputMethodManager imm = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                float precioTotal = calcularPrecio(categoriaSelect);
                 String precio = Float.toString(precioTotal);
             }
 
@@ -113,6 +117,7 @@ public class DialogoIngresoPolideportivo extends DialogFragment implements View.
                 categoriaSelect = 0;
             }
         });
+
         btnMasMay.setOnClickListener(this);
         btnMasMen.setOnClickListener(this);
         btnMenosMay.setOnClickListener(this);
@@ -133,7 +138,8 @@ public class DialogoIngresoPolideportivo extends DialogFragment implements View.
         }).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Utils.showToast(getActivity(), "¡Registro subido!");
+                //Utils.showToast(getContext(), "¡Registro subido!");
+                Toast.makeText(getActivity(), "¡Registro subido!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -156,32 +162,54 @@ public class DialogoIngresoPolideportivo extends DialogFragment implements View.
     }
 
     private float calcularPrecio(int categ) {
-        float precio = 0;
+        float precioTotal = 0;
 
-        switch (categ) {
+        switch (categ){
             case 1:
                 //Afiliados
-                precio = 0;
+                precioTotal = 0;
                 break;
-            case 2:
-                //Estudiantes
-                precio = 50;
-                break;
+            case 4:
             case 5:
+                //Estudiantes
+                if(tipo == 0){
+                    precioTotal = 50;
+                }
+                else
+                    if(tipo == 1){
+                        precioTotal = 250;
+                    }
+                    else{
+                        precioTotal = 1000;
+                    }
+                break;
+
+            case 7:
                 //Particular
-                precio = 250;
+                precioTotal = 250;
                 break;
             default:
                 //Docentes, Nodocentes y Egresados
-                precio = 100;
+                if(tipo == 0){
+                    precioTotal = 100;
+                }
+                else
+                if(tipo == 1){
+                    precioTotal = 500;
+                }
+                else{
+                    precioTotal = 2000;
+                }
                 break;
         }
-        return precio;
+        return precioTotal;
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        float precioTotal;
+        String precio;
+        switch (v.getId()){
             case R.id.btnAddMay:
                 contadorMay++;
                 updateCounter(contadorMay, contadorMeno);
@@ -207,22 +235,22 @@ public class DialogoIngresoPolideportivo extends DialogFragment implements View.
                 updateCounter(contadorMay, contadorMeno);
                 break;
             case R.id.btnDia:
-                btnDia.setEnabled(false);
-                btnMes.setEnabled(true);
-                btnSemana.setEnabled(true);
                 tipo = 0;
+                precioTotal = calcularPrecio(categoriaSelect);
+                precio = Float.toString(precioTotal);
+                txtTotal.setText("$" + precio);
                 break;
             case R.id.btnSemana:
-                btnDia.setEnabled(true);
-                btnMes.setEnabled(true);
-                btnSemana.setEnabled(false);
                 tipo = 1;
+                precioTotal = calcularPrecio(categoriaSelect);
+                precio = Float.toString(precioTotal);
+                txtTotal.setText("$" + precio);
                 break;
             case R.id.btnMes:
-                btnDia.setEnabled(true);
-                btnMes.setEnabled(false);
-                btnSemana.setEnabled(true);
                 tipo = 2;
+                precioTotal = calcularPrecio(categoriaSelect);
+                precio = Float.toString(precioTotal);
+                txtTotal.setText("$" + precio);
                 break;
         }
 

@@ -69,8 +69,6 @@ public class ListadoIngresosAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 dateViewHolder.txtPrecio.setText(String.valueOf(dateItem.getPiletaIngreso().getPrecio1()));
                 break;
         }
-
-
     }
 
     public String getCategoria(int i){

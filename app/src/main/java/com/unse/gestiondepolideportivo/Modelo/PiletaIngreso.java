@@ -36,7 +36,7 @@ public class PiletaIngreso {
         this.cantMayores = 0;
         this.cantMenores = 0;
         this.fecha = null;
-        this.precio1 = 0f;
+        this.precio1 = 0;
     }
 
     public PiletaIngreso(int dni, int id, int categoria, int cantMayores, int cantMenores, String fecha,
