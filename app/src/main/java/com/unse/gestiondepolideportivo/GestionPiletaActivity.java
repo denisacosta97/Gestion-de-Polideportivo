@@ -2,6 +2,7 @@ package com.unse.gestiondepolideportivo;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -45,6 +46,7 @@ public class GestionPiletaActivity extends AppCompatActivity implements View.OnC
         mOpciones.add(new Opciones(1, "Nuevo Ingreso", R.drawable.ic_nuevo,R.color.bienestarVerde));
         mOpciones.add(new Opciones(2, "Listado de Ingresos", R.drawable.ic_listado,R.color.bienestarVerde));
         mOpciones.add(new Opciones(3, "Enviar Datos", R.drawable.ic_subida,R.color.bienestarVerde));
+        mOpciones.add(new Opciones(4,"Confirmar Ingreso", R.drawable.ic_confirmar, R.color.bienestarVerde));
 
         mAdapter = new OpcionesAdapter(mOpciones, getApplicationContext());
         mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
@@ -70,6 +72,10 @@ public class GestionPiletaActivity extends AppCompatActivity implements View.OnC
                         break;
                     case 3:
                         startActivity(new Intent(getApplicationContext(), EnviarDatosPiletaActivity.class));
+                        break;
+                    case 4:
+                        DialogoConfirmacionEstadia dialogoPileta = new DialogoConfirmacionEstadia();
+                        dialogoPileta.show(getSupportFragmentManager(),"dialogo_pileta");
                         break;
                 }
 

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "55491267447",
+    "firebase_url": "https://gestionpolidepotivo.firebaseio.com",
+    "project_id": "gestionpolidepotivo",
+    "storage_bucket": "gestionpolidepotivo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55491267447:android:f0b948a363948a5b63af72",
+        "android_client_info": {
+          "package_name": "com.unse.gestiondepolideportivo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "55491267447-1j53atsth2ejeg028f4l5u3buvhg25sh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unse.gestiondepolideportivo",
+            "certificate_hash": "4ffccae6b2953ee3be0e06afa28dab3d5b1cdc38"
+          }
+        },
+        {
+          "client_id": "55491267447-ne1pu0suv447ijngc01kcq4n2t7veov6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBToisifoIefk0RW_kTi88_6BQMzXiWWxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "55491267447-ne1pu0suv447ijngc01kcq4n2t7veov6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

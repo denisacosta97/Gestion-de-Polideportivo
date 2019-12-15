@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.HashMap;
+
 public class Reserva {
 
     public static final String TAG = Reserva.class.getSimpleName();
@@ -126,6 +128,18 @@ public class Reserva {
 
     public void setEmpleado(String empleado) {
         this.empleado = empleado;
+    }
+
+    public HashMap<String, Object> toHashMap(){
+        HashMap<String, Object> map = new HashMap<>();
+
+        map.put("dni", getDni());
+        map.put("fecha", getFecha());
+        map.put("lugar", getInstalacion());
+        map.put("horaI", getHraInicio());
+        map.put("horaF", getHraFin());
+
+        return map;
     }
 
     @NonNull
