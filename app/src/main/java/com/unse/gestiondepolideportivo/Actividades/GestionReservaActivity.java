@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.unse.gestiondepolideportivo.Adaptadores.OpcionesAdapter;
-import com.unse.gestiondepolideportivo.Dialogos.DialogoNewReservaActivity;
 import com.unse.gestiondepolideportivo.Modelo.Opciones;
 import com.unse.gestiondepolideportivo.R;
 import com.unse.gestiondepolideportivo.RecyclerListener.ItemClickSupport;
@@ -64,9 +63,7 @@ public class GestionReservaActivity extends AppCompatActivity implements View.On
             public void onItemClick(RecyclerView parent, View view, int position, long id) {
                 switch((int)id){
                     case 1:
-                        DialogoNewReservaActivity dialogo = new DialogoNewReservaActivity();
-                        dialogo.setContext(getApplicationContext());
-                        dialogo.show(getSupportFragmentManager(), "dialogo_reserva");
+                        startActivity(new Intent(getApplicationContext(), NewReservaActivity.class));
                         break;
                     case 2:
                         startActivity(new Intent(getApplicationContext(), ListadoReservaActivity.class));
