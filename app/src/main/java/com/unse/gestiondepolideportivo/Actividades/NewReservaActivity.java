@@ -1,37 +1,40 @@
-package com.unse.gestiondepolideportivo.Dialogos;
+package com.unse.gestiondepolideportivo.Actividades;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.unse.gestiondepolideportivo.BaseDatos.ReservaRepo;
-import com.unse.gestiondepolideportivo.Modelo.Reserva;
-import com.unse.gestiondepolideportivo.R;
+import com.unse.gestiondepolideportivo.Herramientas.PreferenciasManager;
 import com.unse.gestiondepolideportivo.Herramientas.Utils;
+import com.unse.gestiondepolideportivo.Modelo.Reserva;
+import com.unse.gestiondepolideportivo.Modelo.ReservasPorFechas;
+import com.unse.gestiondepolideportivo.Herramientas.DatePickerFragment;
+import com.unse.gestiondepolideportivo.R;
 
 import java.util.Calendar;
 
-public class DialogoNewReservaActivity extends DialogFragment implements View.OnClickListener {
+public class NewReservaActivity extends AppCompatActivity implements View.OnClickListener {
 
-    View view;
-    EditText edtDNI, edtHsIni, edtHsFin;
+    Toolbar mToolbar;
+    EditText edtDNI, edtHsIni, edtHsFin, edtFechaReserva;
     Context mContext;
     Button btnAceptar;
     TextView txtCantidadMay, txtCantidadMen, txtTotal;
@@ -45,15 +48,13 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
         this.mContext = ctx;
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.dialog_new_reserva, container, false);
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getDialog().setCanceledOnTouchOutside(false);
-        //Esto es lo nuevoooooooo, evita los bordes cuadrados
-        if (getDialog().getWindow() != null)
-            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_reserva);
+
+        setToolbar();
 
         loadViews();
 
@@ -65,15 +66,14 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
         String precio = Float.toString(precioTotal);
         txtTotal.setText("$" + precio);
 
-        return view;
     }
 
     private void loadData() {
-        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categorias);
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorias);
         dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerCategorias.setAdapter(dataAdapter2);
 
-        ArrayAdapter<String> dataAdapter3 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, instalaciones);
+        ArrayAdapter<String> dataAdapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, instalaciones);
         dataAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerInstalaciones.setAdapter(dataAdapter3);
     }
@@ -89,19 +89,22 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
                     String horaIni = edtHsIni.getText().toString();
                     String horaFin = edtHsFin.getText().toString();
                     String fecha = Utils.getFecha();
+                    String fechaReserva = edtFechaReserva.getText().toString();
                     String precio = txtTotal.getText().toString();
-                    String dniEmpleado = Utils.DNI_TRABAJADOR;
+                    String dniEmpleado = new PreferenciasManager(getApplicationContext()).getValueString(Utils.DNI_TRABAJADOR);
 
-                    ReservaRepo reservaRepo = new ReservaRepo(getContext());
+                    ReservaRepo reservaRepo = new ReservaRepo(getApplicationContext());
                     Reserva reserva = new Reserva(Integer.parseInt(dni),-1,
                             categoriaSelect,instalacionesSelect, horaIni,
-                            horaFin, fecha, precio, dniEmpleado);
+                            horaFin, fechaReserva, precio, dniEmpleado, fecha);
                     reservaRepo.insert(reserva);
-                    Utils.showToast(getContext(), "Reserva registrada.");
-                    dismiss();
+                    Utils.showToast(getApplicationContext(), "Reserva registrada.");
 
+                    ReservasPorFechas reservasPorFechas = new ReservasPorFechas(dni, instalacionesSelect, fechaReserva, fecha);
+                    sendData(reservasPorFechas);
+                    finish();
                 }else{
-                    Utils.showToast(getContext(),"¡Ingrese un DNI!");
+                    Utils.showToast(getApplicationContext(),"¡Ingrese un DNI!");
                 }
             }
         });
@@ -141,18 +144,35 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
 
         edtHsIni.setOnClickListener(this);
         edtHsFin.setOnClickListener(this);
+        edtFechaReserva.setOnClickListener(this);
     }
 
     private void loadViews() {
-        btnAceptar = view.findViewById(R.id.btnAceptar);
-        edtDNI = view.findViewById(R.id.edtDNI);
-        txtCantidadMay = view.findViewById(R.id.txtCantidadMay);
-        txtCantidadMen = view.findViewById(R.id.txtCantidadMen);
-        txtTotal = view.findViewById(R.id.txtTotal);
-        mSpinnerCategorias = view.findViewById(R.id.spineer);
-        mSpinnerInstalaciones = view.findViewById(R.id.spineer2);
-        edtHsIni = view.findViewById(R.id.edtHraIni);
-        edtHsFin = view.findViewById(R.id.edtHraFin);
+        btnAceptar = findViewById(R.id.btnAceptar);
+        edtDNI = findViewById(R.id.edtDNI);
+        txtCantidadMay = findViewById(R.id.txtCantidadMay);
+        txtCantidadMen = findViewById(R.id.txtCantidadMen);
+        txtTotal = findViewById(R.id.txtTotal);
+        mSpinnerCategorias = findViewById(R.id.spineer);
+        mSpinnerInstalaciones = findViewById(R.id.spineer2);
+        edtHsIni = findViewById(R.id.edtHraIni);
+        edtHsFin = findViewById(R.id.edtHraFin);
+        edtFechaReserva = findViewById(R.id.edtFechaReserva);
+    }
+
+    private void sendData(ReservasPorFechas reservasPorFechas) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("reservas").document(reservasPorFechas.getDni()).set(reservasPorFechas).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Utils.showToast(getApplicationContext(), "¡Error al enviar datos!");
+            }
+        }).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Utils.showToast(getApplicationContext(), "¡Registro subido!");
+            }
+        });
     }
 
     private float calcularPrecio(int categ, int inst) {
@@ -244,10 +264,31 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
             }
         };
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog_NoActionBar, myTimeListener, hour, minute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, myTimeListener, hour, minute, true);
         timePickerDialog.setTitle("Hora:");
         timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         timePickerDialog.show();
+    }
+
+    private void showDateDialog() {
+        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 because January is zero
+                final String selectedDate = day + "/" + (month+1) + "/" + year;
+                edtFechaReserva.setText(selectedDate);
+            }
+        });
+        newFragment.show(getFragmentManager(), "datePicker");
+
+    }
+
+    private void setToolbar() {
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        findViewById(R.id.imgFlecha).setVisibility(View.VISIBLE);
+        findViewById(R.id.imgFlecha).setOnClickListener(this);
+        ((TextView)findViewById(R.id.txtTitulo)).setText("Nueva reserva");
     }
 
     @Override
@@ -259,6 +300,13 @@ public class DialogoNewReservaActivity extends DialogFragment implements View.On
             case R.id.edtHraFin:
                 showTimeDialog(1);
                 break;
+            case R.id.imgFlecha:
+                onBackPressed();
+                break;
+            case R.id.edtFechaReserva:
+                showDateDialog();
+                break;
         }
     }
+
 }

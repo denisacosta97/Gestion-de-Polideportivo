@@ -11,9 +11,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Actividades.EnviarDatosReservasActivity"></activity>
         <activity android:name=".Actividades.ListadoReservaActivity"/>
-        <activity android:name=".Dialogos.DialogoNewReservaActivity"/>
         <activity android:name=".Actividades.GestionReservaActivity"/>
         <activity android:name=".Actividades.MainActivity"/>
+        <activity android:name=".Actividades.NewReservaActivity"/>
         <activity android:name=".Actividades.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

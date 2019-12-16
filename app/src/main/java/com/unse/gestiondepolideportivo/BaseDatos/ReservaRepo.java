@@ -29,7 +29,7 @@ public class ReservaRepo {
     }
 
     static String createTable() {
-        return String.format("create table %s(%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s)",
+        return String.format("create table %s(%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s)",
                 Reserva.TABLE,
                 Reserva.KEY_ID, Utils.INT_TYPE, Utils.AUTO_INCREMENT,
                 Reserva.KEY_DNI, Utils.INT_TYPE, Utils.NULL_TYPE,
@@ -37,9 +37,10 @@ public class ReservaRepo {
                 Reserva.KEY_INSTALACION, Utils.INT_TYPE, Utils.NULL_TYPE,
                 Reserva.KEY_HRAINI, Utils.STRING_TYPE, Utils.NULL_TYPE,
                 Reserva.KEY_HRAFIN, Utils.STRING_TYPE, Utils.NULL_TYPE,
-                Reserva.KEY_FECHA, Utils.STRING_TYPE, Utils.NULL_TYPE,
+                Reserva.KEY_FECHARESERVA, Utils.STRING_TYPE, Utils.NULL_TYPE,
                 Reserva.KEY_PRECIO, Utils.STRING_TYPE, Utils.NULL_TYPE,
-                Reserva.KEY_EMPLEADO, Utils.STRING_TYPE, Utils.NULL_TYPE);
+                Reserva.KEY_EMPLEADO, Utils.STRING_TYPE, Utils.NULL_TYPE,
+                Reserva.KEY_FECHA, Utils.STRING_TYPE, Utils.NULL_TYPE);
     }
 
     private ContentValues loadValues(Reserva reserva, int tipo) {
@@ -51,9 +52,10 @@ public class ReservaRepo {
         values.put(Reserva.KEY_INSTALACION, reserva.getInstalacion());
         values.put(Reserva.KEY_HRAINI, reserva.getHraInicio());
         values.put(Reserva.KEY_HRAFIN, reserva.getHraFin());
-        values.put(Reserva.KEY_FECHA,reserva.getFecha());
+        values.put(Reserva.KEY_FECHARESERVA,reserva.getFechaReserva());
         values.put(Reserva.KEY_PRECIO, reserva.getPrecio());
         values.put(Reserva.KEY_EMPLEADO, reserva.getEmpleado());
+        values.put(Reserva.KEY_FECHA, reserva.getFecha());
 
         return values;
     }
@@ -66,9 +68,10 @@ public class ReservaRepo {
         mReserva.setInstalacion(cursor.getInt(3));
         mReserva.setHraInicio(cursor.getString(4));
         mReserva.setHraFin(cursor.getString(5));
-        mReserva.setFecha(cursor.getString(6));
+        mReserva.setFechaReserva(cursor.getString(6));
         mReserva.setPrecio(cursor.getString(7));
         mReserva.setEmpleado(cursor.getString(8));
+        mReserva.setFecha(cursor.getString(9));
 
         return mReserva;
     }

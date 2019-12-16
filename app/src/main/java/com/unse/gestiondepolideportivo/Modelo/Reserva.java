@@ -19,9 +19,10 @@ public class Reserva {
     public static final String KEY_CATEGORIA = "categoria";
     public static final String KEY_HRAINI = "hraIni";
     public static final String KEY_HRAFIN = "hraFin";
-    public static final String KEY_FECHA = "fecha";
+    public static final String KEY_FECHARESERVA = "fecha_reserva";
     public static final String KEY_PRECIO = "precio";
     public static final String KEY_EMPLEADO = "empleado";
+    public static final String KEY_FECHA = "fecha";
 
     private int dni;
     private int id;
@@ -29,21 +30,23 @@ public class Reserva {
     private int instalacion;
     private String hraInicio;
     private String hraFin;
-    private String fecha;
+    private String fechaReserva;
     private String precio;
     private String empleado;
+    private String fecha;
 
     public Reserva(int dni, int id, int categoria, int instalacion, String hraInicio, String hraFin,
-                   String fecha, String precio, String empleado) {
+                   String fechaReserva, String precio, String empleado, String fecha) {
         this.dni = dni;
         this.id = id;
         this.categoria = categoria;
         this.instalacion = instalacion;
         this.hraInicio = hraInicio;
         this.hraFin = hraFin;
-        this.fecha = fecha;
+        this.fechaReserva = fechaReserva;
         this.precio = precio;
         this.empleado = empleado;
+        this.fecha = fecha;
     }
 
     public Reserva() {
@@ -53,9 +56,10 @@ public class Reserva {
         this.instalacion = 0;
         this.hraInicio = "";
         this.hraFin = "";
-        this.fecha = "";
+        this.fechaReserva = "";
         this.precio = "";
         this.empleado = "";
+        this.fecha = "";
     }
 
     public int getDni() {
@@ -106,12 +110,12 @@ public class Reserva {
         this.hraFin = hraFin;
     }
 
-    public String getFecha() {
-        return fecha;
+    public String getFechaReserva() {
+        return fechaReserva;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setFechaReserva(String fechaReserva) {
+        this.fechaReserva = fechaReserva;
     }
 
     public String getPrecio() {
@@ -130,14 +134,23 @@ public class Reserva {
         this.empleado = empleado;
     }
 
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
     public HashMap<String, Object> toHashMap(){
         HashMap<String, Object> map = new HashMap<>();
 
         map.put("dni", getDni());
-        map.put("fecha", getFecha());
+        map.put("fechaR", getFechaReserva());
         map.put("lugar", getInstalacion());
         map.put("horaI", getHraInicio());
         map.put("horaF", getHraFin());
+        map.put("fecha", getFecha());
 
         return map;
     }
