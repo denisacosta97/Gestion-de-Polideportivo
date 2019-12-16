@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Dialogos;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -27,6 +27,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.unse.gestiondepolideportivo.BaseDatos.PiletaRepo;
 import com.unse.gestiondepolideportivo.Modelo.PiletaIngreso;
 import com.unse.gestiondepolideportivo.Modelo.PiletaIngresoPorFechas;
+import com.unse.gestiondepolideportivo.Herramientas.PreferenciasManager;
+import com.unse.gestiondepolideportivo.R;
+import com.unse.gestiondepolideportivo.Herramientas.Utils;
 
 public class DialogoIngresoPolideportivo extends DialogFragment  implements View.OnClickListener {
 
@@ -43,7 +46,7 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.dialog_ingreso_poli, container, false);
+        view = inflater.inflate(R.layout.activity_ingreso_poli, container, false);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         getDialog().setCanceledOnTouchOutside(false);
         //Esto es lo nuevoooooooo, evita los bordes cuadrados
@@ -86,8 +89,7 @@ public class DialogoIngresoPolideportivo extends DialogFragment  implements View
                         float precio = calcularPrecio(categoriaSelect);
                         float precioFinal = contadorMay * precio + contadorMeno * precio;
                         PiletaRepo piletaRepo = new PiletaRepo(getContext());
-                        PiletaIngreso piletaIngreso = new PiletaIngreso(Integer.parseInt(dni), -1, categoriaSelect,
-                                contadorMay, contadorMeno, fecha, precioFinal, Integer.parseInt(dniEmpelado));
+                        PiletaIngreso piletaIngreso = new PiletaIngreso(Integer.parseInt(dni), -1, categoriaSelect, fecha, precioFinal, Integer.parseInt(dniEmpelado));
                         piletaRepo.insert(piletaIngreso);
                         if (tipo != 0) {
                             PiletaIngresoPorFechas pileta = new PiletaIngresoPorFechas(dni, categoriaSelect, fecha, tipo);

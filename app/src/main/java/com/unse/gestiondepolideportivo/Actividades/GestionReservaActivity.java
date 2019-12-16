@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Actividades;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -10,7 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.unse.gestiondepolideportivo.Adaptadores.OpcionesAdapter;
+import com.unse.gestiondepolideportivo.Dialogos.DialogoNewReservaActivity;
 import com.unse.gestiondepolideportivo.Modelo.Opciones;
+import com.unse.gestiondepolideportivo.R;
 import com.unse.gestiondepolideportivo.RecyclerListener.ItemClickSupport;
 
 import java.util.ArrayList;

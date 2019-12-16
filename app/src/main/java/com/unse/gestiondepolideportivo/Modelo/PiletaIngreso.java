@@ -14,8 +14,8 @@ public class PiletaIngreso {
     public static final String KEY_ID = BaseColumns._ID;
     public static final String KEY_DNI = "dni";
     public static final String KEY_CATEGORIA = "categoria";
-    public static final String KEY_CANTMAY = "cantMayores";
-    public static final String KEY_CANTMEN = "cantMenores";
+   // public static final String KEY_CANTMAY = "cantMayores";
+    //public static final String KEY_CANTMEN = "cantMenores";
     public static final String KEY_FECHA = "fecha";
     public static final String KEY_PRECIO1 = "precio1";
     public static final String KEY_EMPLEADO = "dniEmpleado";
@@ -23,32 +23,37 @@ public class PiletaIngreso {
     private int dni;
     private int id;
     private int categoria;
-    private int cantMayores;
-    private int cantMenores;
+   // private int cantMayores;
+    //private int cantMenores;
     private String fecha;
     private float precio1;
     private int dniEmpleado;
+    private int cantidadTotal;
+
+    public int getCantidadTotal() {
+        return cantidadTotal;
+    }
+
+    public void setCantidadTotal(int cantidadTotal) {
+        this.cantidadTotal = cantidadTotal;
+    }
 
     public PiletaIngreso() {
         this.dni = 0;
         this.id = 0;
         this.categoria = 0;
-        this.cantMayores = 0;
-        this.cantMenores = 0;
+
         this.fecha = null;
         this.precio1 = 0;
     }
 
-    public PiletaIngreso(int dni, int id, int categoria, int cantMayores, int cantMenores, String fecha,
-                         float precio1, int dniEm) {
+    public PiletaIngreso(int dni, int id, int categoria, String fecha, float precio1, int dniEmpleado) {
         this.dni = dni;
         this.id = id;
         this.categoria = categoria;
-        this.cantMayores = cantMayores;
-        this.cantMenores = cantMenores;
         this.fecha = fecha;
         this.precio1 = precio1;
-        this.dniEmpleado = dniEm;
+        this.dniEmpleado = dniEmpleado;
     }
 
     public int getDniEmpleado() {
@@ -83,21 +88,6 @@ public class PiletaIngreso {
         this.categoria = categoria;
     }
 
-    public int getCantMayores() {
-        return cantMayores;
-    }
-
-    public void setCantMayores(int cantMayores) {
-        this.cantMayores = cantMayores;
-    }
-
-    public int getCantMenores() {
-        return cantMenores;
-    }
-
-    public void setCantMenores(int cantMenores) {
-        this.cantMenores = cantMenores;
-    }
 
     public String getFecha() {
         return fecha;

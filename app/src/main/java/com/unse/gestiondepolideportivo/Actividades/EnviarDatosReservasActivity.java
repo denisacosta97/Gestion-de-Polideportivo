@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Actividades;
 
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +14,9 @@ import android.widget.Toast;
 
 import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
 import com.unse.gestiondepolideportivo.BaseDatos.ReservaRepo;
+import com.unse.gestiondepolideportivo.Herramientas.Utils;
 import com.unse.gestiondepolideportivo.Modelo.Reserva;
+import com.unse.gestiondepolideportivo.R;
 
 import java.util.ArrayList;
 
@@ -112,7 +114,7 @@ public class EnviarDatosReservasActivity extends AppCompatActivity implements Vi
     }
 
     private void enviarMensaje(View v) {
-        String subject = "ENVIO DATOS "+Utils.getFecha();
+        String subject = "ENVIO DATOS "+ Utils.getFecha();
         StringBuilder mensaje = new StringBuilder();
         for (Reserva reserva : new ReservaRepo(getApplicationContext()).getAllByFecha(fecha)){
             mensaje.append(reserva.toString());

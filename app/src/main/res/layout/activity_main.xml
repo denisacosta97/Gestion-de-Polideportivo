@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorGrey"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".Actividades.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         style="@style/AppTheme.PopupOverlay"

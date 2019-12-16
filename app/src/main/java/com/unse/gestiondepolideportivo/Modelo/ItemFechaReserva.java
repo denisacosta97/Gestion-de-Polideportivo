@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Modelo;
 
 import com.unse.gestiondepolideportivo.Modelo.ItemReserva;
 

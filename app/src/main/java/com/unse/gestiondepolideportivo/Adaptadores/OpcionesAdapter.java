@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Adaptadores;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.unse.gestiondepolideportivo.Modelo.Opciones;
+import com.unse.gestiondepolideportivo.R;
 
 import java.util.ArrayList;
 

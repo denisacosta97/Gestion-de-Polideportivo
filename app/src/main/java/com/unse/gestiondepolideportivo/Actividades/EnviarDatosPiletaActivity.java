@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Actividades;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -13,8 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
+import com.unse.gestiondepolideportivo.BaseDatos.PiletaParcialRepo;
 import com.unse.gestiondepolideportivo.BaseDatos.PiletaRepo;
+import com.unse.gestiondepolideportivo.Herramientas.Utils;
 import com.unse.gestiondepolideportivo.Modelo.PiletaIngreso;
+import com.unse.gestiondepolideportivo.Modelo.PiletaIngresoParcial;
+import com.unse.gestiondepolideportivo.R;
 
 import java.util.ArrayList;
 
@@ -113,11 +117,15 @@ public class EnviarDatosPiletaActivity extends AppCompatActivity implements View
     }
 
     private void enviarMensaje(View v) {
-        String subject = "ENVIO DATOS "+Utils.getFecha();
+        String subject = "ENVIO DATOS "+ Utils.getFecha();
         StringBuilder mensaje = new StringBuilder();
         for (PiletaIngreso piletaIngreso : new PiletaRepo(getApplicationContext()).getAllByFecha(fecha)){
             mensaje.append(piletaIngreso.toString());
             mensaje.append(",");
+            for(PiletaIngresoParcial parcial : new PiletaParcialRepo(getApplicationContext()).getAllByIngreso(piletaIngreso.getId())){
+                mensaje.append(parcial.toString());
+                mensaje.append(",");
+            }
         }
         sendEmails(mensaje, subject);
     }

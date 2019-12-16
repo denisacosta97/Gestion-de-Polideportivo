@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.unse.gestiondepolideportivo.Modelo.PiletaIngresoParcial;
+
 
 public class BDGestor extends SQLiteOpenHelper {
 
@@ -20,6 +22,7 @@ public class BDGestor extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(PiletaRepo.createTable());
         sqLiteDatabase.execSQL(ReservaRepo.createTable());
+        sqLiteDatabase.execSQL(PiletaParcialRepo.createTable());
     }
 
     @Override

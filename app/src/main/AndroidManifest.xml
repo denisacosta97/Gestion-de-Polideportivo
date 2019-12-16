@@ -4,28 +4,28 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EnviarDatosReservasActivity"></activity>
-        <activity android:name=".ListadoReservaActivity"/>
-        <activity android:name=".DialogoNewReservaActivity"/>
-        <activity android:name=".GestionReservaActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Actividades.EnviarDatosReservasActivity"></activity>
+        <activity android:name=".Actividades.ListadoReservaActivity"/>
+        <activity android:name=".Dialogos.DialogoNewReservaActivity"/>
+        <activity android:name=".Actividades.GestionReservaActivity"/>
+        <activity android:name=".Actividades.MainActivity"/>
+        <activity android:name=".Actividades.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashScreenActivity" />
-        <activity android:name=".GestionPiletaActivity" />
-        <activity android:name=".ListadoIngresoActivity" />
-        <activity android:name=".EnviarDatosPiletaActivity" />
-        <activity android:name=".VerificarDatoActivity" />
+        <activity android:name=".Actividades.SplashScreenActivity" />
+        <activity android:name=".Actividades.GestionPiletaActivity" />
+        <activity android:name=".Actividades.ListadoIngresoActivity" />
+        <activity android:name=".Actividades.EnviarDatosPiletaActivity" />
+        <activity android:name=".Actividades.IngresoPolideportivoActivity" />
     </application>
 
 </manifest>

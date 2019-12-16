@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.unse.gestiondepolideportivo.Modelo.Reserva;
-import com.unse.gestiondepolideportivo.Utils;
+import com.unse.gestiondepolideportivo.Herramientas.Utils;
 
 import java.util.ArrayList;
 

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.unse.gestiondepolideportivo.Modelo.PiletaIngreso;
-import com.unse.gestiondepolideportivo.Utils;
+import com.unse.gestiondepolideportivo.Herramientas.Utils;
 
 import java.util.ArrayList;
 
@@ -29,13 +29,11 @@ public class PiletaRepo {
     }
 
     static String createTable() {
-        return String.format("create table %s(%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s, %s %s %s)",
+        return String.format("create table %s(%s %s %s,%s %s %s,%s %s %s,%s %s %s,%s %s %s, %s %s %s)",
                 PiletaIngreso.TABLE,
                 PiletaIngreso.KEY_ID, Utils.INT_TYPE, Utils.AUTO_INCREMENT,
                 PiletaIngreso.KEY_DNI, Utils.INT_TYPE, Utils.NULL_TYPE,
                 PiletaIngreso.KEY_CATEGORIA, Utils.INT_TYPE, Utils.NULL_TYPE,
-                PiletaIngreso.KEY_CANTMAY, Utils.INT_TYPE, Utils.NULL_TYPE,
-                PiletaIngreso.KEY_CANTMEN, Utils.INT_TYPE, Utils.NULL_TYPE,
                 PiletaIngreso.KEY_FECHA, Utils.STRING_TYPE, Utils.NULL_TYPE,
                 PiletaIngreso.KEY_PRECIO1, Utils.FLOAT_TYPE, Utils.NULL_TYPE,
                 PiletaIngreso.KEY_EMPLEADO, Utils.INT_TYPE, Utils.NULL_TYPE);
@@ -47,8 +45,6 @@ public class PiletaRepo {
             values.put(PiletaIngreso.KEY_ID, pileta.getId());
         values.put(PiletaIngreso.KEY_DNI, pileta.getDni());
         values.put(PiletaIngreso.KEY_CATEGORIA, pileta.getCategoria());
-        values.put(PiletaIngreso.KEY_CANTMAY, pileta.getCantMayores());
-        values.put(PiletaIngreso.KEY_CANTMEN, pileta.getCantMenores());
         values.put(PiletaIngreso.KEY_FECHA, pileta.getFecha());
         values.put(PiletaIngreso.KEY_PRECIO1, pileta.getPrecio1());
         values.put(PiletaIngreso.KEY_EMPLEADO, pileta.getDniEmpleado());
@@ -61,19 +57,18 @@ public class PiletaRepo {
         mPiletaIngreso.setId(cursor.getInt(0));
         mPiletaIngreso.setDni(cursor.getInt(1));
         mPiletaIngreso.setCategoria(cursor.getInt(2));
-        mPiletaIngreso.setCantMayores(cursor.getInt(3));
-        mPiletaIngreso.setCantMenores(cursor.getInt(4));
-        mPiletaIngreso.setFecha(cursor.getString(5));
-        mPiletaIngreso.setPrecio1(cursor.getFloat(6));
-        mPiletaIngreso.setDniEmpleado(cursor.getInt(7));
+        mPiletaIngreso.setFecha(cursor.getString(3));
+        mPiletaIngreso.setPrecio1(cursor.getFloat(4));
+        mPiletaIngreso.setDniEmpleado(cursor.getInt(5));
 
         return mPiletaIngreso;
     }
 
-    public void insert(PiletaIngreso pileta) {
+    public int insert(PiletaIngreso pileta) {
         SQLiteDatabase db = DBManager.getInstance().openDatabase();
-        db.insert(PiletaIngreso.TABLE, null, loadValues(pileta, 1));
+        long id = db.insert(PiletaIngreso.TABLE, null, loadValues(pileta, 1));
         DBManager.getInstance().closeDatabase();
+        return (int) id;
     }
 
     public void delete(PiletaIngreso pileta) {

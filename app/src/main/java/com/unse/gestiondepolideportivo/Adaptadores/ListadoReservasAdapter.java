@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Adaptadores;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.unse.gestiondepolideportivo.Modelo.ItemFechaReserva;
 import com.unse.gestiondepolideportivo.Modelo.ItemDatoReserva;
-import com.unse.gestiondepolideportivo.Modelo.ItemFecha;
 import com.unse.gestiondepolideportivo.Modelo.ItemReserva;
+import com.unse.gestiondepolideportivo.R;
+import com.unse.gestiondepolideportivo.Herramientas.Utils;
 
 import java.util.Date;
 import java.util.List;

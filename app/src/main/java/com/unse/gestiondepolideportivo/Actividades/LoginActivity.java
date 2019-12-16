@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Actividades;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.unse.gestiondepolideportivo.Herramientas.PreferenciasManager;
+import com.unse.gestiondepolideportivo.Herramientas.Utils;
+import com.unse.gestiondepolideportivo.R;
 
 public class LoginActivity extends AppCompatActivity {
 

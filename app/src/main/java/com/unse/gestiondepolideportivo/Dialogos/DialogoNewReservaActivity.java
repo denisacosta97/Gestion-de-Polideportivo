@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Dialogos;
 
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -12,19 +12,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.unse.gestiondepolideportivo.BaseDatos.ReservaRepo;
 import com.unse.gestiondepolideportivo.Modelo.Reserva;
+import com.unse.gestiondepolideportivo.R;
+import com.unse.gestiondepolideportivo.Herramientas.Utils;
 
 import java.util.Calendar;
 

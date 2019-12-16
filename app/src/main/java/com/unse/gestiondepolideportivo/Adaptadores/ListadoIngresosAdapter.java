@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Adaptadores;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.unse.gestiondepolideportivo.Modelo.ItemDato;
 import com.unse.gestiondepolideportivo.Modelo.ItemFecha;
 import com.unse.gestiondepolideportivo.Modelo.ItemListado;
+import com.unse.gestiondepolideportivo.R;
+import com.unse.gestiondepolideportivo.Herramientas.Utils;
 
 import java.util.Date;
 import java.util.List;
@@ -63,8 +65,7 @@ public class ListadoIngresosAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 ItemDato dateItem = (ItemDato) lista.get(position);
                 DateViewHolder dateViewHolder = (DateViewHolder) viewHolder;
                 dateViewHolder.txtDNI.setText(String.valueOf(dateItem.getPiletaIngreso().getDni()));
-                dateViewHolder.txtCantMenor.setText(String.valueOf(dateItem.getPiletaIngreso().getCantMenores()));
-                dateViewHolder.txtCantidadMay.setText(String.valueOf(dateItem.getPiletaIngreso().getCantMayores()));
+                dateViewHolder.txtCantidadMay.setText(String.valueOf(dateItem.getPiletaIngreso().getCantidadTotal()));
                 dateViewHolder.txtCategoria.setText(getCategoria(dateItem.getPiletaIngreso().getCategoria()-1));
                 dateViewHolder.txtPrecio.setText(String.valueOf(dateItem.getPiletaIngreso().getPrecio1()));
                 break;

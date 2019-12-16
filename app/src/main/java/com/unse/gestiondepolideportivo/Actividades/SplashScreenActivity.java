@@ -1,20 +1,13 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Actividades;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
+import com.unse.gestiondepolideportivo.R;
 
 
 public class SplashScreenActivity extends AppCompatActivity {

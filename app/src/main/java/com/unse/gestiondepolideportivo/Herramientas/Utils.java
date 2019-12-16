@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Herramientas;
 
 import android.content.Context;
 import android.content.pm.PackageManager;

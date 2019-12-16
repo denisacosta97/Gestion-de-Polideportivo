@@ -1,4 +1,4 @@
-package com.unse.gestiondepolideportivo;
+package com.unse.gestiondepolideportivo.Dialogos;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,9 +22,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.unse.gestiondepolideportivo.Modelo.PiletaIngresoPorFechas;
+import com.unse.gestiondepolideportivo.R;
+import com.unse.gestiondepolideportivo.Herramientas.Utils;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
